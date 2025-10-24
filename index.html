@@ -154,7 +154,7 @@
         <!-- 1. HOME VIEW (Category Selector) -->
         <!-- ========================================================================= -->
         <div id="home-view" class="view-section">
-            <!-- Adjusted vertical padding (pt-4 pb-6) to pull content up -->
+            <!-- HEADER CONTENT (Only visible on Home) -->
             <header class="text-center pt-4 pb-6"> 
                 <h1 class="text-6xl sm:text-7xl font-extrabold mb-3 leading-tight">
                     <span class="neon-cyan">PREMIUM</span> <span class="neon-magenta">ACCESS.</span>
@@ -205,7 +205,8 @@
         <!-- 2. PRODUCT VIEW (Listing Products) -->
         <!-- ========================================================================= -->
         <div id="products-view" class="view-section hidden-view">
-            <h2 class="text-4xl font-extrabold mb-8 text-center neon-magenta">
+            <!-- Removed pt-10 to align title higher -->
+            <h2 class="text-4xl font-extrabold mb-8 text-center neon-magenta pt-0"> 
                 <span id="product-category-title">CATEGORY</span> Products
             </h2>
             <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -743,4 +744,3 @@
     </script>
 </body>
 </html>
-
