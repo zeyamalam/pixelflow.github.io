@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PixelFlow - Premium Access. Unlimited Flow.</title>
     
-    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Load Inter font --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Load Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
-    <!-- Load Lucide Icons --><script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- EmailJS SDK --><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
-        // Initialize EmailJS (Replace with your actual Public Key)
+        // Initialize EmailJS with YOUR Public Key
         (function(){
             emailjs.init({
-              publicKey: "YOUR_PUBLIC_KEY", // <-- REPLACE THIS
+              publicKey: "p6_7swS8ZZWaCO7Et", // <-- YOUR Public Key Inserted
             });
         })();
     </script>
@@ -163,20 +167,19 @@
 </head>
 <body class="min-h-screen">
     
-    <!-- Floating Background Animation CONTAINER --><div id="flow-shape" class="flow-shape">
-        <!-- Particles will be injected here by JavaScript --></div>
+    <div id="flow-shape" class="flow-shape"></div>
 
-    <!-- Main Content Wrapper --><div class="main-content max-w-7xl mx-auto p-4 sm:p-8">
+    <div class="main-content max-w-7xl mx-auto p-4 sm:p-8">
 
-        <!-- HEADER / NAVIGATION (Applies to all views) --><nav class="flex justify-between items-center py-4 border-b border-gray-800 mb-2 sm:mb-4"> 
-            <!-- Logo container (always visible now) --><div id="logo-container" class="flex items-center cursor-pointer" onclick="switchView('home')">
+        <nav class="flex justify-between items-center py-4 border-b border-gray-800 mb-2 sm:mb-4"> 
+            <div id="logo-container" class="flex items-center cursor-pointer" onclick="switchView('home')">
                 <img src="pixel_2-removebg-preview.png" 
                      alt="PixelFlow Logo" 
                      class="h-24 w-auto"
                      onerror="this.onerror=null; this.src='https://placehold.co/200x100/0d0d1e/FF00FF?text=PixelFlow';"> 
             </div>
             
-            <!-- Right side Navigation Links & Cart --><div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4">
                 <div class="hidden sm:flex space-x-6 text-sm font-medium text-gray-400">
                     <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('products', 'STREAMING')">PRODUCTS</a>
                     <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('contact')">CONTACT</a>
@@ -189,9 +192,9 @@
             </div>
         </nav>
 
-
-        <!-- ========================================================================= --><!-- 1. HOME VIEW (Category Selector) --><!-- ========================================================================= --><div id="home-view" class="view-section">
-            <!-- Header section remains the same --><header class="text-center pt-4 pb-6"> 
+        <!-- Home View -->
+        <div id="home-view" class="view-section">
+            <header class="text-center pt-4 pb-6"> 
                 <h1 class="text-6xl sm:text-7xl font-extrabold mb-3 leading-tight">
                     <span class="neon-cyan">PREMIUM</span> <span class="neon-magenta">ACCESS.</span>
                 </h1>
@@ -203,7 +206,7 @@
                 </p>
             </header>
 
-            <!-- Trust Signals Section (Modified: "Verified Access" removed) --><section class="max-w-4xl mx-auto grid grid-cols-2 gap-4 sm:gap-6 text-center mb-10 sm:mb-16 -mt-4 sm:-mt-0">
+            <section class="max-w-4xl mx-auto grid grid-cols-2 gap-4 sm:gap-6 text-center mb-10 sm:mb-16 -mt-4 sm:-mt-0">
                 <div class="bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-gray-700">
                     <i data-lucide="shield-check" class="w-8 h-8 mx-auto mb-2 text-green-400"></i>
                     <h4 class="font-bold text-sm sm:text-lg text-gray-100">100% Trusted</h4>
@@ -214,8 +217,8 @@
                 </div>
             </section>
 
-            <!-- FEATURE/SERVICE SECTION remains the same --><section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
                     <i data-lucide="tv" class="w-8 h-8 mb-3 text-red-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">STREAMING</h3>
                     <p class="text-sm text-gray-400">Netflix, Prime Video, Disney+, HBO Max, DAZN, Movistar+, Viki, Canal+</p>
@@ -238,185 +241,123 @@
             </section>
         </div>
 
-        <!-- ========================================================================= --><!-- 2. PRODUCT VIEW (Listing Products) --><!-- ========================================================================= --><div id="products-view" class="view-section hidden-view pt-6"> 
-            <!-- Back button and title aligned horizontally --><div class="flex items-center mb-6"> 
-                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">
-                    ← Back
-                </a>
+        <!-- Products View -->
+        <div id="products-view" class="view-section hidden-view pt-6"> 
+            <div class="flex items-center mb-6"> 
+                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
                 <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow"> 
                     <span id="product-category-title">CATEGORY</span> Products
                 </h2>
+                 <div class="w-auto invisible" style="min-width: 90px;"></div> <!-- Placeholder -->
             </div>
-            <!-- FIXED: Increased padding-top for product cards below the title --><div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"> 
-                <!-- Product cards will be injected here by JavaScript --></div>
+            <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"> </div>
         </div>
 
-        <!-- ========================================================================= --><!-- 3. CART VIEW (Checkout) --><!-- ========================================================================= --><div id="cart-view" class="view-section hidden-view max-w-4xl mx-auto pt-6">
+        <!-- Cart View -->
+        <div id="cart-view" class="view-section hidden-view max-w-4xl mx-auto pt-6">
             <div class="flex items-center mb-6">
-                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">
-                    ← Back
-                </a>
+                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Your Cart</h2>
+                <div class="w-auto invisible" style="min-width: 90px;"></div> 
             </div>
-            
-            <div id="cart-items-container" class="space-y-4 mb-8">
-                <!-- Cart items will be listed here --></div>
-
-            <div id="cart-summary" class="bg-gray-800 p-6 rounded-xl neon-glow-border">
-                <p class="flex justify-between text-2xl font-bold mb-4">
-                    <span>Total:</span>
-                    <span id="cart-total" class="neon-magenta">₹0.00</span>
-                </p>
-                <div id="cart-message" class="text-center text-gray-400 mb-4">Your cart is empty.</div>
-                
-                <button id="checkout-button" onclick="checkout()" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button hidden-view">
-                    Proceed to Checkout
-                </button>
-                <button id="back-to-shop-button" onclick="goBack()" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
-                    Continue Shopping
-                </button>
-            </div>
+            <div id="cart-items-container" class="space-y-4 mb-8"></div>
+            <div id="cart-summary" class="bg-gray-800 p-6 rounded-xl neon-glow-border"></div>
         </div>
 
-        <!-- ========================================================================= --><!-- 4. CUSTOMER DETAILS VIEW --><!-- ========================================================================= --><div id="customer-details-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
+        <!-- Customer Details View -->
+        <div id="customer-details-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
             <div class="flex items-center mb-6">
-                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">
-                    ← Back
-                </a>
+                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Customer Details</h2>
+                <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
-            
             <form id="customer-form" class="bg-gray-800 p-6 sm:p-8 rounded-xl neon-glow-border space-y-6">
                 <div>
                     <label for="customer-name" class="form-label">Full Name</label>
                     <input type="text" id="customer-name" name="customer-name" class="form-input" required>
                 </div>
-                
                 <div>
                     <label for="customer-email" class="form-label">Email Address</label>
                     <input type="email" id="customer-email" name="customer-email" class="form-input" required>
                 </div>
-
                 <div>
                     <label for="customer-phone" class="form-label">Phone Number (Optional)</label>
                     <input type="tel" id="customer-phone" name="customer-phone" class="form-input">
                 </div>
-
                 <div id="form-error-message" class="text-red-400 text-sm hidden-view">Please fill out all required fields.</div>
-
                 <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <button type="button" onclick="goBack()" class="w-full px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
-                        ← Back to Cart
-                    </button>
-                    <button type="submit" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button">
-                        Next: Review Payment
-                    </button>
+                    <button type="button" onclick="goBack()" class="w-full px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">← Back to Cart</button>
+                    <button type="submit" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button">Next: Review Payment</button>
                 </div>
             </form>
         </div>
 
-        <!-- ========================================================================= --><!-- 5. INVOICE/PAYMENT VIEW --><!-- ========================================================================= --><div id="invoice-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
+        <!-- Invoice/Payment View -->
+        <div id="invoice-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
             <div class="flex items-center mb-6">
-                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">
-                    ← Back
-                </a>
+                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
                 <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow">Final Invoice & Payment</h2>
+                <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
-            
             <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 mb-6">
-                <h3 class="text-2xl font-bold mb-4 neon-cyan">Order Summary</h3>
-                <div id="invoice-items-list" class="space-y-3 mb-6 border-b border-gray-800 pb-4">
-                    <!-- Invoice items inserted here --></div>
-                
+                 <h3 class="text-2xl font-bold mb-4 neon-cyan">Order Summary</h3>
+                <div id="invoice-items-list" class="space-y-3 mb-6 border-b border-gray-800 pb-4"></div>
                 <p class="flex justify-between text-2xl font-bold">
                     <span class="text-gray-400">Grand Total (INR):</span>
                     <span id="invoice-total" class="neon-magenta text-3xl">₹0.00</span>
                 </p>
-                <p id="invoice-currency-note" class="text-xs text-red-400 mt-2 hidden-view">
-                    *Total includes only items priced in ₹. Foreign currency items must be paid separately.
-                </p>
+                <p id="invoice-currency-note" class="text-xs text-red-400 mt-2 hidden-view">*Total includes only items priced in ₹. Foreign currency items must be paid separately.</p>
             </div>
-            
             <div class="bg-gray-800 p-6 rounded-xl neon-glow-border">
                 <h3 class="text-2xl font-bold mb-4 neon-cyan">Select Payment Method</h3>
-                
-                <!-- Trust signals for payment page (Modified: "Verified Access" removed) --><div class="flex justify-around items-center text-xs sm:text-sm text-gray-400 mb-6 -mt-2">
+                <div class="flex justify-around items-center text-xs sm:text-sm text-gray-400 mb-6 -mt-2">
                     <span class="flex items-center"><i data-lucide="shield-check" class="w-4 h-4 mr-1 text-green-400"></i> 100% Trusted</span>
                     <span class="flex items-center"><i data-lucide="users" class="w-4 h-4 mr-1 text-cyan-400"></i> 500+ Deals Done</span>
                 </div>
-                
                 <div class="p-4 border border-gray-700 rounded-lg mb-4 text-center">
                     <p class="font-bold text-lg mb-3">Scan UPI QR Code (PixelFlow)</p>
-                    
                     <img id="upi-qr-code" 
                          src="image_40a5fe.png" 
                          alt="UPI QR Code for Payment" 
                          class="mx-auto w-48 h-48 rounded-lg mb-3 border-2 border-gray-700"
                          onerror="this.onerror=null; this.src='https://placehold.co/192x192/0d0d1e/FF00FF?text=Error+Loading+QR';">
-
                     <p class="text-sm text-gray-400">Scan this code with any UPI app to pay the total amount.</p>
                     <p class="text-sm text-gray-400">Or pay on our UPI ID: <strong class="text-gray-200">zeyamalam@fam</strong></p>
                 </div>
-
-                <!-- Confirmation text --><div class="p-4 rounded-lg bg-gray-900 border border-red-500">
+                <div class="p-4 rounded-lg bg-gray-900 border border-red-500">
                     <p class="text-base font-bold text-yellow-400">IMPORTANT: ORDER CONFIRMATION</p>
-                    <p class="text-sm text-gray-400 mt-2">
-                        After paying, please <strong class="text-yellow-300">DM the payment receipt</strong> to one of our channels for instant access:
-                    </p>
+                    <p class="text-sm text-gray-400 mt-2">After paying, please <strong class="text-yellow-300">DM the payment receipt</strong> to one of our channels for instant access:</p>
                     <div class="flex justify-center gap-6 mt-3">
-                        <a href="https://www.instagram.com/pixel.flow._" target="_blank" class="font-bold neon-magenta hover:neon-cyan transition-all duration-300">
-                            <i data-lucide="instagram" class="inline-block w-4 h-4 mr-1"></i> Instagram
-                        </a>
-                        <a href="mailto:zeyamalam@gmail.com" class="font-bold neon-cyan hover:neon-magenta transition-all duration-300">
-                            <i data-lucide="mail" class="inline-block w-4 h-4 mr-1"></i> Email
-                        </a>
+                        <a href="https://www.instagram.com/pixel.flow._" target="_blank" class="font-bold neon-magenta hover:neon-cyan transition-all duration-300"><i data-lucide="instagram" class="inline-block w-4 h-4 mr-1"></i> Instagram</a>
+                        <a href="mailto:zeyamalam@gmail.com" class="font-bold neon-cyan hover:neon-magenta transition-all duration-300"><i data-lucide="mail" class="inline-block w-4 h-4 mr-1"></i> Email</a>
                     </div>
                 </div>
-
-                <!-- Confirm Order Button --><button onclick="showOrderConfirmation()" class="w-full mt-6 px-6 py-3 text-xl rounded-lg confirm-order-button">
-                    Confirm Order
-                </button>
+                <button onclick="showOrderConfirmation()" class="w-full mt-6 px-6 py-3 text-xl rounded-lg confirm-order-button">Confirm Order</button>
             </div>
-            <button onclick="goBack()" class="mt-6 mx-auto block px-6 py-2 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
-                ← Back to Details
-            </button>
         </div>
 
-        <!-- ========================================================================= --><!-- 6. ORDER CONFIRMATION VIEW --><!-- ========================================================================= --><div id="order-confirmation-view" class="view-section hidden-view max-w-xl mx-auto text-center pt-16 pb-12">
-            <!-- No back button on this final confirmation page --><i data-lucide="check-circle" class="w-20 h-20 text-green-500 mx-auto mb-6 animate-pulse"></i>
+        <!-- Order Confirmation View -->
+        <div id="order-confirmation-view" class="view-section hidden-view max-w-xl mx-auto text-center pt-16 pb-12">
+             <i data-lucide="check-circle" class="w-20 h-20 text-green-500 mx-auto mb-6 animate-pulse"></i>
             <h2 class="text-4xl font-extrabold mb-4 neon-cyan">Order Received!</h2>
-            <p class="text-lg text-gray-300 mb-6">
-                Thank you for your purchase, <strong class="neon-magenta" id="confirmation-customer-name">Customer</strong>!
-            </p>
-            
+            <p class="text-lg text-gray-300 mb-6">Thank you for your purchase, <strong class="neon-magenta" id="confirmation-customer-name">Customer</strong>!</p>
             <div class="bg-gray-800 p-6 rounded-xl neon-glow-border space-y-4 text-left">
-                <p class="text-base text-gray-200">
-                    <strong class="text-yellow-400">Important:</strong> Please ensure you have shared your payment screenshot/receipt on Instagram or Email.
-                </p>
-                <p class="text-base text-gray-200">
-                    Our team will review your request shortly and you will be contacted at <strong class="neon-magenta" id="confirmation-customer-email">your-email@example.com</strong> with your instant access credentials.
-                </p>
-                <p class="text-base text-gray-400">
-                    In the unfortunate case of any issue or if your order cannot be fulfilled, a full refund will be processed promptly.
-                </p>
+                <p class="text-base text-gray-200"><strong class="text-yellow-400">Important:</strong> Please ensure you have shared your payment screenshot/receipt on Instagram or Email.</p>
+                <p class="text-base text-gray-200">Our team will review your request shortly and you will be contacted at <strong class="neon-magenta" id="confirmation-customer-email">your-email@example.com</strong> with your instant access credentials.</p>
+                <p class="text-base text-gray-400">In the unfortunate case of any issue or if your order cannot be fulfilled, a full refund will be processed promptly.</p>
             </div>
-            
-            <button onclick="resetAndGoHome()" class="w-full sm:w-auto mt-10 px-8 py-3 text-lg rounded-lg font-bold bg-purple-600 text-white hover:bg-purple-700 transition duration-300">
-                Back to Home
-            </button>
+            <button onclick="resetAndGoHome()" class="w-full sm:w-auto mt-10 px-8 py-3 text-lg rounded-lg font-bold bg-purple-600 text-white hover:bg-purple-700 transition duration-300">Back to Home</button>
         </div>
 
-
-        <!-- ========================================================================= --><!-- 7. CONTACT VIEW --><!-- ========================================================================= --><div id="contact-view" class="view-section hidden-view pt-6">
+        <!-- Contact View -->
+        <div id="contact-view" class="view-section hidden-view pt-6">
             <div class="flex items-center mb-6">
-                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">
-                    ← Back
-                </a>
-                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Contact PixelFlow</h2>
+                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
+                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Contact PixelFlow</h2>
+                 <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
-
             <section class="max-w-2xl mx-auto bg-gray-800 p-8 rounded-xl neon-glow-border mb-16">
-                <h3 class="text-xl font-bold mb-4 neon-magenta">Our Channels:</h3>
+                 <h3 class="text-xl font-bold mb-4 neon-magenta">Our Channels:</h3>
                 <div class="space-y-4">
                     <p class="flex items-center text-lg"><i data-lucide="mail" class="w-5 h-5 mr-3 text-cyan-400"></i> Email: zeyamalam@gmail.com</p>
                     <p class="flex items-center text-lg"><i data-lucide="instagram" class="w-5 h-5 mr-3 text-cyan-400"></i> Instagram: pixel.flow._</p>
@@ -424,14 +365,15 @@
             </section>
         </div>
 
-
-        <!-- GLOBAL FOOTER (Applies to all views) --><footer class="text-center py-4 mt-12">
+        <!-- Footer -->
+        <footer class="text-center py-4 mt-12">
             <p class="text-xs text-gray-600 mt-6">&copy; 2024 PixelFlow. All Rights Reserved. <span class="neon-cyan">Domain: PixelFlow.io</span></p>
         </footer>
 
     </div>
     
-    <!-- ========================================================================= --><!-- JAVASCRIPT: E-COMMERCE LOGIC & DUST ANIMATION --><!-- ========================================================================= --><script>
+    <!-- JavaScript -->
+    <script>
         lucide.createIcons(); // Initialize Lucide Icons
 
         // --- GLOBAL CONSTANTS ---
@@ -494,7 +436,7 @@
         animateParticles();
 
         // --- E-COMMERCE DATA ---
-        const productsData = {
+        const productsData = { /* ... (product data remains the same) ... */ 
             STREAMING: [
                 { id: 101, name: "Netflix (3M Standard)", price: 250.00, currency: "₹", icon: 'film' },
                 { id: 105, name: "Netflix (3M 4K UHD)", price: 300.00, currency: "₹", icon: 'film' },
@@ -558,7 +500,7 @@
             } else {
                 console.error("View not found:", viewName);
             }
-
+            
             // Logic for specific views
             if (viewName === 'products' && category) {
                 document.getElementById('product-category-title').textContent = category.toUpperCase();
@@ -569,7 +511,7 @@
                 renderCart();
             }
 
-            // Re-initialize icons (important for dynamically added icons like in cart)
+            // Re-initialize icons
             lucide.createIcons();
             // Scroll to top
             window.scrollTo(0, 0);
@@ -577,123 +519,76 @@
 
         // Simpler goBack logic
         function goBack() {
-            // Determine where to go back to based on the previous view
             let targetView = previousView || 'home'; 
-
-            if (currentView === 'invoice') {
-                targetView = 'customer-details';
-            } else if (currentView === 'customer-details') {
-                targetView = 'cart';
-            } else if (currentView === 'order-confirmation') {
-                resetAndGoHome(); 
-                return;
-            } else {
-                targetView = 'home'; 
-            }
-            
+            if (currentView === 'invoice') targetView = 'customer-details';
+            else if (currentView === 'customer-details') targetView = 'cart';
+            else if (currentView === 'order-confirmation') { resetAndGoHome(); return; }
+            else targetView = 'home'; 
             switchView(targetView);
         }
-
 
         // --- PRODUCT RENDERING ---
         function renderProducts(category) {
             const productList = document.getElementById('product-list');
             productList.innerHTML = '';
-            
             const categoryProducts = productsData[category];
-            if (!categoryProducts) return productList.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found for this category.</p>`;
-
+            if (!categoryProducts) return productList.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found.</p>`;
             categoryProducts.forEach(product => {
                 const productCard = `
                     <div class="p-6 rounded-xl neon-glow-border transition-all duration-300 flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center mb-3">
-                                <i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i>
-                                <h3 class="font-bold text-xl neon-cyan">${product.name}</h3>
-                            </div>
+                            <div class="flex items-center mb-3"><i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i><h3 class="font-bold text-xl neon-cyan">${product.name}</h3></div>
                             <p class="text-3xl font-extrabold mb-4 neon-magenta">${product.currency}${product.price.toFixed(2)}</p>
                             <p class="text-sm text-gray-400 mb-4">Affordable, verified access. Delivery within minutes.</p>
                         </div>
-                        <button onclick="addToCart(${product.id})" 
-                                class="w-full mt-auto px-4 py-2 text-sm rounded-lg font-bold bg-green-500 text-gray-900 hover:bg-green-400 transition duration-300">
-                            Add to Cart
-                        </button>
-                    </div>
-                `;
+                        <button onclick="addToCart(${product.id})" class="w-full mt-auto px-4 py-2 text-sm rounded-lg font-bold bg-green-500 text-gray-900 hover:bg-green-400 transition duration-300">Add to Cart</button>
+                    </div>`;
                 productList.innerHTML += productCard;
             });
             lucide.createIcons(); 
         }
 
         // --- CART LOGIC ---
-        function findProductById(id) {
-            for (const category in productsData) {
+        function findProductById(id) { /* ... (remains same) ... */ 
+             for (const category in productsData) {
                 const product = productsData[category].find(p => p.id === id);
                 if (product) return product;
             }
             return null;
         }
-
-        function addToCart(productId) {
+        function addToCart(productId) { /* ... (remains same) ... */ 
             const product = findProductById(productId);
             if (!product) return;
-            
             const existingItem = cart.find(item => item.id === productId);
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    currency: product.currency, 
-                    quantity: 1
-                });
-            }
+            if (existingItem) { existingItem.quantity += 1; } 
+            else { cart.push({ id: product.id, name: product.name, price: product.price, currency: product.currency, quantity: 1 }); }
             updateCartDisplay();
         }
-
-        function removeFromCart(productId) {
+        function removeFromCart(productId) { /* ... (remains same) ... */ 
             const index = cart.findIndex(item => item.id === productId);
-            if (index > -1) {
-                cart.splice(index, 1);
-                renderCart(); 
-            }
+            if (index > -1) { cart.splice(index, 1); renderCart(); }
             updateCartDisplay(); 
         }
-
-        function updateCartDisplay() {
+        function updateCartDisplay() { /* ... (remains same) ... */ 
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-count').textContent = totalCount;
         }
-
-        function calculateCartTotal(targetCurrency = '₹') {
-            return cart.reduce((total, item) => {
-                if (item.currency === targetCurrency) {
-                    return total + (item.price * item.quantity);
-                }
+        function calculateCartTotal(targetCurrency = '₹') { /* ... (remains same) ... */ 
+             return cart.reduce((total, item) => {
+                if (item.currency === targetCurrency) { return total + (item.price * item.quantity); }
                 return total;
             }, 0);
         }
-
-        function renderCart() {
+        function renderCart() { /* ... (remains same) ... */ 
             const summaryContainer = document.getElementById('cart-summary');
-
-            if (!document.getElementById('cart-total')) {
-                summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE;
-            }
-
+            if (!document.getElementById('cart-total')) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
             const container = document.getElementById('cart-items-container');
             const totalEl = document.getElementById('cart-total');
             const checkoutBtn = document.getElementById('checkout-button');
             const messageEl = document.getElementById('cart-message');
-            
             container.innerHTML = ''; 
-            
             const inrTotal = calculateCartTotal('₹');
             const usdTotal = calculateCartTotal('$'); 
-            
             if (cart.length === 0) {
                 totalEl.textContent = '₹0.00';
                 checkoutBtn.classList.add('hidden-view');
@@ -701,183 +596,112 @@
                 messageEl.classList.remove('hidden-view');
             } else {
                 totalEl.textContent = `₹${inrTotal.toFixed(2)}`;
-                if (usdTotal > 0) {
-                     messageEl.textContent = `Note: ₹${inrTotal.toFixed(2)} is the total for INR items. USD items paid separately.`;
-                } else {
-                     messageEl.textContent = `Total items: ${cart.length} product(s).`;
-                }
+                if (usdTotal > 0) { messageEl.textContent = `Note: ₹${inrTotal.toFixed(2)} is the total for INR items. USD items paid separately.`; } 
+                else { messageEl.textContent = `Total items: ${cart.length} product(s).`; }
                 messageEl.classList.remove('hidden-view');
                 checkoutBtn.classList.remove('hidden-view');
-
-                // Render each cart item
                 cart.forEach(item => {
                     const itemTotal = item.price * item.quantity;
-                    const itemHtml = `
-                        <div class="flex justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-700">
-                            <div>
-                                <p class="font-bold neon-cyan">${item.name}</p>
-                                <p class="text-sm text-gray-400">${item.quantity} x ${item.currency}${item.price.toFixed(2)}</p>
-                            </div>
-                            <div class="flex items-center space-x-4">
-                                <span class="text-lg font-bold neon-magenta">${item.currency}${itemTotal.toFixed(2)}</span>
-                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-400 transition duration-200">
-                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `;
+                    const itemHtml = `<div class="flex justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-700"><div><p class="font-bold neon-cyan">${item.name}</p><p class="text-sm text-gray-400">${item.quantity} x ${item.currency}${item.price.toFixed(2)}</p></div><div class="flex items-center space-x-4"><span class="text-lg font-bold neon-magenta">${item.currency}${itemTotal.toFixed(2)}</span><button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-400 transition duration-200"><i data-lucide="trash-2" class="w-5 h-5"></i></button></div></div>`;
                     container.innerHTML += itemHtml;
                 });
             }
-
             lucide.createIcons(); 
         }
 
         // --- INVOICE AND PAYMENT LOGIC ---
-        
-        // Event Listener for the customer details form
-        document.getElementById('customer-form').addEventListener('submit', function(event) {
+        document.getElementById('customer-form').addEventListener('submit', function(event) { /* ... (remains same) ... */ 
             event.preventDefault(); 
-            
             const name = document.getElementById('customer-name').value;
             const email = document.getElementById('customer-email').value;
             const errorMsg = document.getElementById('form-error-message');
-
-            if (!name || !email) {
-                errorMsg.textContent = 'Please fill out your Name and Email Address.';
-                errorMsg.classList.remove('hidden-view');
-                return;
-            }
-            
+            if (!name || !email) { errorMsg.textContent = 'Please fill out your Name and Email Address.'; errorMsg.classList.remove('hidden-view'); return; }
             errorMsg.classList.add('hidden-view');
             customerDetails.name = name;
             customerDetails.email = email;
             customerDetails.phone = document.getElementById('customer-phone').value;
-            
             showInvoice();
         });
-        
-        // Switches to the customer details view
-        function checkout() {
+        function checkout() { /* ... (remains same) ... */ 
             const inrTotal = calculateCartTotal('₹');
             if (inrTotal === 0 && cart.length === 0) { 
                  const messageEl = document.getElementById('cart-message');
-                 if (messageEl) { 
-                    messageEl.textContent = 'Your cart is empty. Add items to proceed.';
-                    messageEl.classList.remove('hidden-view');
-                 }
+                 if (messageEl) { messageEl.textContent = 'Your cart is empty. Add items to proceed.'; messageEl.classList.remove('hidden-view'); }
                  return;
             }
-            
             document.getElementById('customer-name').value = customerDetails.name;
             document.getElementById('customer-email').value = customerDetails.email;
             document.getElementById('customer-phone').value = customerDetails.phone;
             switchView('customer-details');
         }
-
-        // Shows the final invoice
-        function showInvoice() {
+        function showInvoice() { /* ... (remains same) ... */ 
             const inrTotal = calculateCartTotal('₹');
             const usdTotal = calculateCartTotal('$');
-
             const invoiceListContainer = document.getElementById('invoice-items-list');
             invoiceListContainer.innerHTML = '';
-            
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity;
-                const itemHtml = `
-                    <div class="flex justify-between text-sm text-gray-400">
-                        <span>${item.name} (${item.quantity}x)</span>
-                        <span class="font-medium">${item.currency}${itemTotal.toFixed(2)}</span>
-                    </div>
-                `;
+                const itemHtml = `<div class="flex justify-between text-sm text-gray-400"><span>${item.name} (${item.quantity}x)</span><span class="font-medium">${item.currency}${itemTotal.toFixed(2)}</span></div>`;
                 invoiceListContainer.innerHTML += itemHtml;
             });
-
             const finalTotalDisplay = document.getElementById('invoice-total');
             const currencyNote = document.getElementById('invoice-currency-note');
             finalTotalDisplay.textContent = `₹${inrTotal.toFixed(2)}`;
-            
-            if (usdTotal > 0) {
-                currencyNote.classList.remove('hidden-view');
-            } else {
-                currencyNote.classList.add('hidden-view');
-            }
-            
+            if (usdTotal > 0) { currencyNote.classList.remove('hidden-view'); } 
+            else { currencyNote.classList.add('hidden-view'); }
             switchView('invoice');
         }
 
         // --- Function to send order email using EmailJS ---
-        function sendOrderEmail() {
+        function sendOrderEmail() { 
             // ** IMPORTANT **
-            // Replace these placeholders with your actual EmailJS IDs from emailjs.com
-            const serviceID = 'YOUR_SERVICE_ID';     // <-- REPLACE THIS (Find under Email Services)
-            const templateID = 'YOUR_TEMPLATE_ID';   // <-- REPLACE THIS (Find under Email Templates)
-            // Public Key was initialized in the <head> script
+            // Use YOUR specific IDs from EmailJS here
+            const serviceID = 'pixelflow';     // <-- YOUR Service ID (You confirmed this)
+            const templateID = 'template_qaqai6k';   // <-- YOUR Template ID
+            // Public Key was initialized in <head>
 
-            // Format cart items for the email (can customize in EmailJS template too)
-            let orderItemsText = ''; // Using plain text for broader email compatibility
-            cart.forEach(item => {
-                orderItemsText += `${item.name} (x${item.quantity}) - ${item.currency}${ (item.price * item.quantity).toFixed(2) }\n`;
-            });
-
+            let orderItemsText = ''; 
+            cart.forEach(item => { orderItemsText += `${item.name} (x${item.quantity}) - ${item.currency}${ (item.price * item.quantity).toFixed(2) }\n`; });
             const templateParams = {
-                // These names MUST match the {{variable_name}} in your EmailJS template
                 customer_name: customerDetails.name,
                 customer_email: customerDetails.email,
                 customer_phone: customerDetails.phone || 'Not Provided', 
-                order_items: orderItemsText, // Send as plain text string
+                order_items: orderItemsText, 
                 order_total: `₹${calculateCartTotal('₹').toFixed(2)}`
             };
-
             console.log("Preparing to send email with params:", templateParams);
-
-            if (typeof emailjs === 'undefined') {
-                console.error('EmailJS SDK not loaded.');
-                return; 
-            }
-            if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'YOUR_TEMPLATE_ID') {
-                console.warn('EmailJS Service ID or Template ID not replaced. Email will not be sent.');
+            if (typeof emailjs === 'undefined') { console.error('EmailJS SDK not loaded.'); return; }
+            
+            // Basic check if IDs look like placeholders (remove this if your IDs really are 'pixelflow')
+            if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'YOUR_TEMPLATE_ID') { 
+                console.warn('EmailJS Service ID or Template ID might still be placeholders. Email will not be sent.'); 
                 return; 
             }
 
             emailjs.send(serviceID, templateID, templateParams)
-                .then((response) => {
-                   console.log('SUCCESS! Email Sent.', response.status, response.text);
-                })
-                .catch((error) => {
-                   console.error('FAILED... Email Sending Error:', error);
-                });
+                .then((response) => { console.log('SUCCESS! Email Sent.', response.status, response.text); })
+                .catch((error) => { console.error('FAILED... Email Sending Error:', error); });
         }
 
-
         // Function to show the order confirmation view AND send email
-        function showOrderConfirmation() {
+        function showOrderConfirmation() { /* ... (remains same) ... */ 
             document.getElementById('confirmation-customer-name').textContent = customerDetails.name;
             document.getElementById('confirmation-customer-email').textContent = customerDetails.email;
-            
             console.log("Order Confirmed! Customer Details:", customerDetails);
             console.log("Cart Items:", cart);
-
             sendOrderEmail(); 
-            
             switchView('order-confirmation');
         }
 
         // Function to reset cart/customer details and go home
-        function resetAndGoHome() {
+        function resetAndGoHome() { /* ... (remains same) ... */ 
             const summaryContainer = document.getElementById('cart-summary');
-            if (summaryContainer) {
-                 summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE;
-            }
-
+            if (summaryContainer) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
             cart = [];
             customerDetails = { name: '', email: '', phone: '' };
-            
             updateCartDisplay();
             switchView('home');
         }
-
 
         // --- INITIALIZATION ---
         switchView('home'); 
