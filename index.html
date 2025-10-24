@@ -53,22 +53,25 @@
             border: 2px solid #FFFF00;
         }
 
-        /* Floating Background Animation (The "Flow") */
-        @keyframes float-flow {
-            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.6; }
-            50% { transform: translate(-55%, -55%) rotate(180deg); opacity: 0.4; }
-            100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.6; }
-        }
+        /* NEW: Mouse-Tracking Particle/Dust Animation */
         .flow-shape {
-            position: fixed; /* Fixed so it covers the entire viewport */
-            width: 150vw;
-            height: 150vh;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 50%, transparent 70%);
-            top: 50%;
-            left: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             pointer-events: none;
             z-index: 0;
-            animation: float-flow 30s infinite linear;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0), #0d0d1e 70%); /* Subtle dark vignette */
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.1s ease-out, opacity 0.5s ease-out; /* Smooth movement and fading */
         }
 
         /* Adjusting main content to sit above the animation */
@@ -81,32 +84,61 @@
         .hidden-view {
             display: none;
         }
+
+        /* Back Button Styling */
+        .back-button-grid {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #00FFFF;
+            background-color: rgba(0, 255, 255, 0.05);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transition: all 0.2s ease-in-out;
+            font-weight: 700;
+            color: #00FFFF;
+        }
+        .back-button-grid:hover {
+            border-color: #FF00FF;
+            background-color: rgba(255, 0, 255, 0.15);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+            color: #FF00FF;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="min-h-screen">
     
-    <!-- Floating Background Animation -->
-    <div class="flow-shape"></div>
+    <!-- Floating Background Animation CONTAINER -->
+    <div id="flow-shape" class="flow-shape">
+        <!-- Particles will be injected here by JavaScript -->
+    </div>
 
     <!-- Main Content Wrapper -->
     <div class="main-content max-w-7xl mx-auto p-4 sm:p-8">
 
         <!-- HEADER / NAVIGATION (Applies to all views) -->
-        <nav class="flex justify-between items-center py-4 border-b border-gray-800 mb-12">
+        <nav class="flex justify-between items-center py-4 border-b border-gray-800 mb-6 sm:mb-8">
             
-            <!-- Logo Area (Click to return home) -->
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('home')">
-                <img src="pixel.jpg" 
-                     alt="PixelFlow Logo" 
-                     class="h-10 w-auto">
-                <span class="text-2xl font-extrabold tracking-wider">
-                    <span class="neon-cyan">Pixel</span><span class="neon-magenta">|Flow</span>
-                </span>
+            <!-- Dynamic Back Button / Logo -->
+            <div class="flex items-center space-x-4">
+                <!-- Back Link - Moved down slightly with mt-1 -->
+                <a href="#" id="back-link" class="back-button-grid mt-1 hidden-view" onclick="goBack()">
+                    ← Back
+                </a>
+                
+                <!-- Logo - Always present -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('home')">
+                    <!-- Note: You need to ensure the 'pixel.jpg' image is in the same directory as index.html -->
+                    <img src="pixel.jpg" 
+                         alt="PixelFlow Logo" 
+                         class="h-10 w-auto">
+                    <span class="text-2xl font-extrabold tracking-wider">
+                        <span class="neon-cyan">Pixel</span><span class="neon-magenta">|Flow</span>
+                    </span>
+                </div>
             </div>
             
             <!-- Navigation Links -->
             <div class="hidden sm:flex space-x-6 text-sm font-medium text-gray-400">
-                <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('home')">HOME</a>
                 <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('products', 'STREAMING')">PRODUCTS</a>
                 <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('contact')">CONTACT</a>
             </div>
@@ -122,11 +154,12 @@
         <!-- 1. HOME VIEW (Category Selector) -->
         <!-- ========================================================================= -->
         <div id="home-view" class="view-section">
-            <header class="text-center pt-10 pb-16">
-                <h1 class="text-6xl sm:text-7xl font-extrabold mb-4 leading-tight">
+            <!-- Adjusted vertical padding (pt-4 pb-6) to pull content up -->
+            <header class="text-center pt-4 pb-6"> 
+                <h1 class="text-6xl sm:text-7xl font-extrabold mb-3 leading-tight">
                     <span class="neon-cyan">PREMIUM</span> <span class="neon-magenta">ACCESS.</span>
                 </h1>
-                <h2 class="text-3xl sm:text-4xl font-light tracking-wide text-gray-300 mb-8">
+                <h2 class="text-3xl sm:text-4xl font-light tracking-wide text-gray-300 mb-6">
                     AFFORDABLE PRICES. <span class="neon-cyan">UNLIMITED FLOW.</span>
                 </h2>
                 <p class="max-w-3xl mx-auto text-lg text-gray-400">
@@ -135,7 +168,7 @@
             </header>
 
             <!-- FEATURE/SERVICE SECTION (Now clickable categories) -->
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
 
                 <!-- 1. STREAMING -->
                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
@@ -178,10 +211,6 @@
             <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Product cards will be injected here by JavaScript -->
             </div>
-            
-            <button onclick="switchView('home')" class="mt-12 mx-auto block px-6 py-2 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
-                ← Back to Categories
-            </button>
         </div>
 
         <!-- ========================================================================= -->
@@ -205,7 +234,7 @@
                 <button id="checkout-button" onclick="checkout()" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button hidden-view">
                     Proceed to Checkout
                 </button>
-                <button id="back-to-shop-button" onclick="switchView('home')" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
+                <button id="back-to-shop-button" onclick="goBack()" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
                     Continue Shopping
                 </button>
             </div>
@@ -227,6 +256,7 @@
                     <span class="text-gray-400">Grand Total (INR):</span>
                     <span id="invoice-total" class="neon-magenta text-3xl">₹0.00</span>
                 </p>
+                <!-- Note: Currency note is now hidden as all products are INR -->
                 <p id="invoice-currency-note" class="text-xs text-red-400 mt-2 hidden-view">
                     *Total includes only items priced in ₹. Foreign currency items must be paid separately (Contact us for details).
                 </p>
@@ -256,7 +286,7 @@
                     I Have Paid (Confirm Order)
                 </button>
             </div>
-            <button onclick="switchView('cart')" class="mt-6 mx-auto block px-6 py-2 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
+            <button onclick="goBack()" class="mt-6 mx-auto block px-6 py-2 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
                 ← Back to Cart
             </button>
         </div>
@@ -264,7 +294,6 @@
 
         <!-- ========================================================================= -->
         <!-- 5. CONTACT/FOOTER SECTION -->
-        <!-- ========================================================================= -->
         <div id="contact-view" class="view-section hidden-view">
             <header class="text-center pt-10 pb-16">
                 <h2 class="text-4xl font-extrabold mb-4 neon-cyan">Contact PixelFlow</h2>
@@ -293,7 +322,7 @@
     </div>
     
     <!-- ========================================================================= -->
-    <!-- JAVASCRIPT: E-COMMERCE LOGIC -->
+    <!-- JAVASCRIPT: E-COMMERCE LOGIC & DUST ANIMATION -->
     <!-- ========================================================================= -->
     <script>
         lucide.createIcons(); // Initialize Lucide Icons
@@ -301,41 +330,120 @@
         // --- GLOBAL CONSTANTS ---
         const MERCHANT_UPI_ID = "zeyamalam@fam"; 
         const MERCHANT_NAME = "PixelFlow";
+        const PARTICLE_COUNT = 80; // Total number of small dust particles
+        const particleColors = ['#00FFFF', '#FF00FF', '#0077FF']; // Cyan, Magenta, Blue
+
+        // --- MOUSE TRACKING PARTICLE GENERATION ---
+        const flowShape = document.getElementById('flow-shape');
+        const particles = [];
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+
+        // 1. Create Particles
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 2 + 1; // Size 1px to 3px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+            particle.style.backgroundColor = color;
+            particle.style.boxShadow = `0 0 ${Math.random() * 5}px ${color}`;
+            
+            // Random initial position far from the center
+            particle.x = Math.random() * window.innerWidth;
+            particle.y = Math.random() * window.innerHeight;
+            particle.speedX = (Math.random() - 0.5) * 0.1; // Slow drift
+            particle.speedY = (Math.random() - 0.5) * 0.1;
+            
+            // Initial render
+            particle.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
+            particle.style.opacity = Math.random() * 0.6 + 0.2; // Opacity 0.2 to 0.8
+            
+            flowShape.appendChild(particle);
+            particles.push(particle);
+        }
+
+        // 2. Mouse Move Listener
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        // 3. Animation Loop
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                const particle = particles[i];
+                
+                // Add natural drift
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+
+                // Simple attraction/repulsion logic (flow towards mouse, but gently)
+                const dx = mouseX - particle.x;
+                const dy = mouseY - particle.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 300) {
+                    const force = 0.0005 * (300 - distance);
+                    particle.speedX += force * dx / distance;
+                    particle.speedY += force * dy / distance;
+                }
+
+                // Dampen speed to prevent particles from flying away
+                particle.speedX *= 0.99;
+                particle.speedY *= 0.99;
+
+                // Keep particle on screen (wrap around)
+                if (particle.x < -10) particle.x = window.innerWidth + 10;
+                if (particle.x > window.innerWidth + 10) particle.x = -10;
+                if (particle.y < -10) particle.y = window.innerHeight + 10;
+                if (particle.y > window.innerHeight + 10) particle.y = -10;
+
+                particle.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
+            }
+        }
+        
+        // Start the animation
+        animateParticles();
+
 
         // --- E-COMMERCE DATA ---
+        // All prices are now set between ₹200 and ₹300
         const productsData = {
             STREAMING: [
-                // New Netflix Tiers in INR (₹)
-                { id: 101, name: "Netflix (3M Standard)", price: 300.00, currency: "₹", icon: 'film' },
-                { id: 105, name: "Netflix (3M 4K UHD)", price: 500.00, currency: "₹", icon: 'film' },
-                { id: 106, name: "Netflix (6M Standard)", price: 500.00, currency: "₹", icon: 'film' },
-                { id: 107, name: "Netflix (6M 4K UHD)", price: 650.00, currency: "₹", icon: 'film' },
-                
-                // Retained other streaming services (using original $ pricing)
-                { id: 102, name: "Disney+ & Hulu Bundle (3 Months)", price: 24.50, currency: "$", icon: 'sparkles' },
-                { id: 103, name: "HBO Max (6 Months)", price: 39.99, currency: "$", icon: 'clapperboard' },
-                { id: 104, name: "DAZN Sports Pass (1 Year)", price: 150.00, currency: "$", icon: 'zap' }
+                { id: 101, name: "Netflix (3M Standard)", price: 250.00, currency: "₹", icon: 'film' },
+                { id: 105, name: "Netflix (3M 4K UHD)", price: 300.00, currency: "₹", icon: 'film' },
+                { id: 106, name: "Netflix (6M Standard)", price: 300.00, currency: "₹", icon: 'film' },
+                { id: 107, name: "Netflix (6M 4K UHD)", price: 300.00, currency: "₹", icon: 'film' },
+                { id: 102, name: "Prime Video (6 Months)", price: 200.00, currency: "₹", icon: 'sparkles' },
+                { id: 103, name: "Disney+ Hotstar (1 Year)", price: 280.00, currency: "₹", icon: 'clapperboard' },
+                { id: 104, name: "HBO Max (6 Months)", price: 275.00, currency: "₹", icon: 'zap' }
             ],
             GAMING: [
-                { id: 201, name: "Steam Account (AAA Games Bundle)", price: 35.00, currency: "$", icon: 'controller' },
-                { id: 202, name: "FiveM Ready Account", price: 12.00, currency: "$", icon: 'users' },
-                { id: 203, name: "UFC/NBA Premium Access (1 Year)", price: 55.00, currency: "$", icon: 'dribbble' }
+                { id: 201, name: "Steam Account (AAA Games Bundle)", price: 290.00, currency: "₹", icon: 'controller' },
+                { id: 202, name: "FiveM Ready Account", price: 210.00, currency: "₹", icon: 'users' },
+                { id: 203, name: "UFC/NBA Premium Access (1 Year)", price: 299.00, currency: "₹", icon: 'dribbble' }
             ],
             SECURITY: [
-                { id: 301, name: "NordVPN Premium (1 Year)", price: 29.99, currency: "$", icon: 'lock' },
-                { id: 302, name: "ExpressVPN Pro (6 Months)", price: 19.99, currency: "$", icon: 'shield' },
-                { id: 303, name: "PureVPN Global (Lifetime)", price: 99.00, currency: "$", icon: 'cloud' }
+                { id: 301, name: "NordVPN Premium (1 Year)", price: 285.00, currency: "₹", icon: 'lock' },
+                { id: 302, name: "ExpressVPN Pro (6 Months)", price: 245.00, currency: "₹", icon: 'shield' },
+                { id: 303, name: "PureVPN Global (Lifetime)", price: 300.00, currency: "₹", icon: 'cloud' }
             ],
             PRODUCTIVITY: [
-                { id: 401, name: "Canva Pro (1 Year)", price: 19.99, currency: "$", icon: 'layout-grid' },
-                { id: 402, name: "ChatGPT 4 (1 Month)", price: 14.99, currency: "$", icon: 'bot' },
-                { id: 403, name: "Filmora Pro Editor (3 Months)", price: 29.99, currency: "$", icon: 'video' },
-                { id: 404, name: "Duolingo+ (6 Months)", price: 15.00, currency: "$", icon: 'speech' }
+                { id: 401, name: "Canva Pro (1 Year)", price: 230.00, currency: "₹", icon: 'layout-grid' },
+                { id: 402, name: "ChatGPT 4 (1 Month)", price: 270.00, currency: "₹", icon: 'bot' },
+                { id: 403, name: "Filmora Pro Editor (3 Months)", price: 295.00, currency: "₹", icon: 'video' },
+                { id: 404, name: "Duolingo+ (6 Months)", price: 220.00, currency: "₹", icon: 'speech' }
             ]
         };
 
         // --- STATE MANAGEMENT ---
         let currentView = 'home';
+        let previousView = 'home'; // Tracks the last major view for the "Back" link
         let cart = []; // { id: number, name: string, price: number, quantity: number, currency: string }
 
         // --- TEMPLATE TO RESTORE CART SUMMARY ---
@@ -349,13 +457,17 @@
             <button id="checkout-button" onclick="checkout()" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button hidden-view">
                 Proceed to Checkout
             </button>
-            <button id="back-to-shop-button" onclick="switchView('home')" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
+            <button id="back-to-shop-button" onclick="goBack()" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
                 Continue Shopping
             </button>
         `;
 
         // --- VIEW MANAGEMENT ---
         function switchView(viewName, category = '') {
+            // Only update previousView if we are moving from a main view (home, products, cart, contact)
+            if (currentView !== viewName) {
+                previousView = currentView;
+            }
             currentView = viewName;
             
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden-view'));
@@ -365,6 +477,14 @@
                 targetView.classList.remove('hidden-view');
             } else {
                 console.error("View not found:", viewName);
+            }
+
+            // Show/Hide Back Link based on current view
+            const backLink = document.getElementById('back-link');
+            if (viewName === 'home') {
+                backLink.classList.add('hidden-view');
+            } else {
+                backLink.classList.remove('hidden-view');
             }
 
             if (viewName === 'products' && category) {
@@ -377,7 +497,25 @@
             }
         }
 
-        // --- PRODUCT RENDERING (No change) ---
+        function goBack() {
+            // Custom back functionality: simple view history tracking
+            if (currentView === 'invoice') {
+                // If on invoice, go back to cart
+                switchView('cart');
+            } else if (currentView === 'cart' || currentView === 'contact') {
+                // If on cart or contact, go back to home
+                switchView('home');
+            } else if (currentView === 'products') {
+                // If on products list, go back to home
+                switchView('home');
+            } else {
+                // Default fallback
+                switchView('home');
+            }
+        }
+
+
+        // --- PRODUCT RENDERING ---
         function renderProducts(category) {
             const productList = document.getElementById('product-list');
             productList.innerHTML = '';
@@ -405,7 +543,7 @@
             lucide.createIcons(); 
         }
 
-        // --- CART LOGIC (No major change) ---
+        // --- CART LOGIC ---
         function findProductById(id) {
             for (const category in productsData) {
                 const product = productsData[category].find(p => p.id === id);
@@ -487,6 +625,7 @@
 
             totalEl.textContent = `₹${inrTotal.toFixed(2)}`;
 
+            // Since all products are INR now, the USD check is redundant but kept for flexibility
             if (usdTotal > 0) {
                  messageEl.textContent = `Note: ₹${inrTotal.toFixed(2)} is the total for items priced in INR. You also have items priced in USD which must be paid separately.`;
             } else {
@@ -561,6 +700,7 @@
             finalTotalDisplay.textContent = `₹${inrTotal.toFixed(2)}`;
             qrAmountDisplay.textContent = inrTotal.toFixed(2); // Update amount for QR code display
             
+            // This is primarily hidden because all products are INR now, but kept for logic safety
             if (usdTotal > 0) {
                 currencyNote.classList.remove('hidden-view');
             } else {
@@ -603,3 +743,4 @@
     </script>
 </body>
 </html>
+
