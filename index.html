@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelFlow - Premium Access. Unlimited Flow.</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Base Styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d1e; /* Deep dark blue/purple */
+            color: #E0E0FF;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Neon Customization */
+        .neon-cyan {
+            color: #00FFFF;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7), 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+        .neon-magenta {
+            color: #FF00FF;
+            text-shadow: 0 0 5px rgba(255, 0, 255, 0.7), 0 0 15px rgba(255, 0, 255, 0.4);
+        }
+        .neon-glow-border {
+            border: 1px solid #FF00FF;
+            box-shadow: 0 0 8px #FF00FF, 0 0 15px rgba(255, 0, 255, 0.3);
+            background-color: rgba(255, 0, 255, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer; /* Indicate clickability */
+        }
+        .neon-glow-border:hover {
+            border-color: #00FFFF;
+            box-shadow: 0 0 10px #00FFFF, 0 0 20px rgba(0, 255, 255, 0.4);
+            background-color: rgba(0, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Pulsing CTA Animation */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px #FFFF00, 0 0 30px rgba(255, 255, 0, 0.5); }
+            50% { box-shadow: 0 0 5px #FFFF00, 0 0 10px rgba(255, 255, 0, 0.2); }
+        }
+        .cta-button {
+            animation: pulse-glow 2s infinite ease-in-out;
+            border: 2px solid #FFFF00;
+        }
+
+        /* Floating Background Animation (The "Flow") */
+        @keyframes float-flow {
+            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.6; }
+            50% { transform: translate(-55%, -55%) rotate(180deg); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.6; }
+        }
+        .flow-shape {
+            position: fixed; /* Fixed so it covers the entire viewport */
+            width: 150vw;
+            height: 150vh;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 50%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: float-flow 30s infinite linear;
+        }
+
+        /* Adjusting main content to sit above the animation */
+        .main-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Utility for hiding views */
+        .hidden-view {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    
+    <!-- Floating Background Animation -->
+    <div class="flow-shape"></div>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content max-w-7xl mx-auto p-4 sm:p-8">
+
+        <!-- HEADER / NAVIGATION (Applies to all views) -->
+        <nav class="flex justify-between items-center py-4 border-b border-gray-800 mb-12">
+            
+            <!-- Logo Area (Click to return home) -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('home')">
+                <img src="pixel.jpg" 
+                     alt="PixelFlow Logo" 
+                     class="h-10 w-auto">
+                <span class="text-2xl font-extrabold tracking-wider">
+                    <span class="neon-cyan">Pixel</span><span class="neon-magenta">|Flow</span>
+                </span>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="hidden sm:flex space-x-6 text-sm font-medium text-gray-400">
+                <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('home')">HOME</a>
+                <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('products', 'STREAMING')">PRODUCTS</a>
+                <a href="#" class="hover:neon-cyan transition duration-300" onclick="switchView('contact')">CONTACT</a>
+            </div>
+            
+            <!-- Cart Button -->
+            <button onclick="switchView('cart')" class="relative px-3 py-2 text-sm rounded-lg font-bold hover:bg-gray-800 transition duration-300">
+                <i data-lucide="shopping-cart" class="w-6 h-6 neon-cyan"></i>
+                <span id="cart-count" class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center -mt-1 -mr-1">0</span>
+            </button>
+        </nav>
+
+        <!-- ========================================================================= -->
+        <!-- 1. HOME VIEW (Category Selector) -->
+        <!-- ========================================================================= -->
+        <div id="home-view" class="view-section">
+            <header class="text-center pt-10 pb-16">
+                <h1 class="text-6xl sm:text-7xl font-extrabold mb-4 leading-tight">
+                    <span class="neon-cyan">PREMIUM</span> <span class="neon-magenta">ACCESS.</span>
+                </h1>
+                <h2 class="text-3xl sm:text-4xl font-light tracking-wide text-gray-300 mb-8">
+                    AFFORDABLE PRICES. <span class="neon-cyan">UNLIMITED FLOW.</span>
+                </h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-400">
+                    Select a category below to browse our premium products at a fraction of the cost.
+                </p>
+            </header>
+
+            <!-- FEATURE/SERVICE SECTION (Now clickable categories) -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+
+                <!-- 1. STREAMING -->
+                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
+                    <i data-lucide="tv" class="w-8 h-8 mb-3 text-red-400"></i>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">STREAMING</h3>
+                    <p class="text-sm text-gray-400">Netflix, Prime Video, Disney+, HBO Max, DAZN, Movistar+, Viki, Canal+</p>
+                </div>
+
+                <!-- 2. GAMING -->
+                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'GAMING')">
+                    <i data-lucide="gamepad-2" class="w-8 h-8 mb-3 text-pink-400"></i>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">GAMING</h3>
+                    <p class="text-sm text-gray-400">Steam Accounts & Games, FiveM Ready, UFC / NBA</p>
+                </div>
+
+                <!-- 3. SECURITY -->
+                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'SECURITY')">
+                    <i data-lucide="shield-check" class="w-8 h-8 mb-3 text-green-400"></i>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">SECURITY</h3>
+                    <p class="text-sm text-gray-400">Premium VPN access: NordVPN, ExpressVPN, PureVPN.</p>
+                </div>
+
+                <!-- 4. PRODUCTIVITY -->
+                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'PRODUCTIVITY')">
+                    <i data-lucide="sparkles" class="w-8 h-8 mb-3 text-yellow-400"></i>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">PRODUCTIVITY</h3>
+                    <p class="text-sm text-gray-400">CapCut Pro, Filmora, Canva Pro, ChatGPT (1 Month), Duolingo+</p>
+                </div>
+
+            </section>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- 2. PRODUCT VIEW (Listing Products) -->
+        <!-- ========================================================================= -->
+        <div id="products-view" class="view-section hidden-view">
+            <h2 class="text-4xl font-extrabold mb-8 text-center neon-magenta">
+                <span id="product-category-title">CATEGORY</span> Products
+            </h2>
+            <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Product cards will be injected here by JavaScript -->
+            </div>
+            
+            <button onclick="switchView('home')" class="mt-12 mx-auto block px-6 py-2 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
+                ← Back to Categories
+            </button>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- 3. CART VIEW (Checkout) -->
+        <!-- ========================================================================= -->
+        <div id="cart-view" class="view-section hidden-view max-w-4xl mx-auto">
+            <h2 class="text-4xl font-extrabold mb-8 text-center neon-cyan">Your Cart</h2>
+            
+            <div id="cart-items-container" class="space-y-4 mb-8">
+                <!-- Cart items will be listed here -->
+            </div>
+
+            <div id="cart-summary" class="bg-gray-800 p-6 rounded-xl neon-glow-border">
+                <!-- Content is managed dynamically by renderCart/checkout, using the template below -->
+                <p class="flex justify-between text-2xl font-bold mb-4">
+                    <span>Total:</span>
+                    <span id="cart-total" class="neon-magenta">₹0.00</span>
+                </p>
+                <div id="cart-message" class="text-center text-gray-400 mb-4">Your cart is empty.</div>
+                
+                <button id="checkout-button" onclick="checkout()" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button hidden-view">
+                    Proceed to Checkout
+                </button>
+                <button id="back-to-shop-button" onclick="switchView('home')" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- 4. INVOICE/PAYMENT VIEW -->
+        <!-- ========================================================================= -->
+        <div id="invoice-view" class="view-section hidden-view max-w-xl mx-auto">
+            <h2 class="text-4xl font-extrabold mb-8 text-center neon-magenta">Final Invoice & Payment</h2>
+            
+            <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 mb-6">
+                <h3 class="text-2xl font-bold mb-4 neon-cyan">Order Summary</h3>
+                <div id="invoice-items-list" class="space-y-3 mb-6 border-b border-gray-800 pb-4">
+                    <!-- Invoice items inserted here -->
+                </div>
+                
+                <p class="flex justify-between text-2xl font-bold">
+                    <span class="text-gray-400">Grand Total (INR):</span>
+                    <span id="invoice-total" class="neon-magenta text-3xl">₹0.00</span>
+                </p>
+                <p id="invoice-currency-note" class="text-xs text-red-400 mt-2 hidden-view">
+                    *Total includes only items priced in ₹. Foreign currency items must be paid separately (Contact us for details).
+                </p>
+            </div>
+            
+            <div class="bg-gray-800 p-6 rounded-xl neon-glow-border">
+                <h3 class="text-2xl font-bold mb-4 neon-cyan">Select Payment Method</h3>
+                
+                <!-- UPI QR Code Payment (Now dynamic via deep link) -->
+                <div class="p-4 border border-gray-700 rounded-lg mb-4 text-center">
+                    <p class="font-bold text-lg mb-3">Scan UPI QR Code (PixelFlow)</p>
+                    <!-- QR code image is dynamically updated with UPI deep link -->
+                    <img id="upi-qr-code" 
+                         src="https://placehold.co/200x200/0d0d1e/00FFFF?text=UPI%20QR" 
+                         alt="UPI QR Code for Payment" 
+                         class="mx-auto w-48 h-48 rounded-lg mb-3 border-2 border-cyan-500">
+                    <p class="text-sm text-gray-400">Scan this code with any UPI app to pay **₹<span id="qr-amount">0.00</span>**.</p>
+                    <p class="text-sm text-gray-400">Our UPI ID: **zeyamalam@fam**</p>
+                </div>
+
+                <div class="p-4 rounded-lg bg-gray-900 border border-red-500">
+                    <p class="text-base font-bold text-yellow-400">IMPORTANT: ORDER CONFIRMATION</p>
+                    <p class="text-sm text-gray-400 mt-1">After scanning and completing the payment, please **DM the payment receipt** to our Instagram: <span class="neon-magenta">pixel.flow._</span> for instant access credentials.</p>
+                </div>
+
+                <button onclick="confirmPayment()" class="w-full mt-6 px-6 py-3 text-xl rounded-lg font-bold bg-green-500 text-gray-900 hover:bg-green-400 transition duration-300">
+                    I Have Paid (Confirm Order)
+                </button>
+            </div>
+            <button onclick="switchView('cart')" class="mt-6 mx-auto block px-6 py-2 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
+                ← Back to Cart
+            </button>
+        </div>
+
+
+        <!-- ========================================================================= -->
+        <!-- 5. CONTACT/FOOTER SECTION -->
+        <!-- ========================================================================= -->
+        <div id="contact-view" class="view-section hidden-view">
+            <header class="text-center pt-10 pb-16">
+                <h2 class="text-4xl font-extrabold mb-4 neon-cyan">Contact PixelFlow</h2>
+                <p class="max-w-xl mx-auto text-lg text-gray-400">
+                    Ready to start the flow? DM us now for details and instant access.
+                </p>
+            </header>
+
+            <section class="max-w-2xl mx-auto bg-gray-800 p-8 rounded-xl neon-glow-border mb-16">
+                <h3 class="text-xl font-bold mb-4 neon-magenta">Our Channels:</h3>
+                <div class="space-y-4">
+                    <!-- Updated Email -->
+                    <p class="flex items-center text-lg"><i data-lucide="mail" class="w-5 h-5 mr-3 text-cyan-400"></i> Email: zeyamalam@gmail.com</p>
+                    <!-- Updated Instagram -->
+                    <p class="flex items-center text-lg"><i data-lucide="instagram" class="w-5 h-5 mr-3 text-cyan-400"></i> Instagram: pixel.flow._</p>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- GLOBAL FOOTER (Applies to all views) -->
+        <footer class="text-center py-4 mt-12">
+            <p class="text-xs text-gray-600 mt-6">&copy; 2024 PixelFlow. All Rights Reserved. <span class="neon-cyan">Domain: PixelFlow.io</span></p>
+        </footer>
+
+    </div>
+    
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT: E-COMMERCE LOGIC -->
+    <!-- ========================================================================= -->
+    <script>
+        lucide.createIcons(); // Initialize Lucide Icons
+
+        // --- GLOBAL CONSTANTS ---
+        const MERCHANT_UPI_ID = "zeyamalam@fam"; 
+        const MERCHANT_NAME = "PixelFlow";
+
+        // --- E-COMMERCE DATA ---
+        const productsData = {
+            STREAMING: [
+                // New Netflix Tiers in INR (₹)
+                { id: 101, name: "Netflix (3M Standard)", price: 300.00, currency: "₹", icon: 'film' },
+                { id: 105, name: "Netflix (3M 4K UHD)", price: 500.00, currency: "₹", icon: 'film' },
+                { id: 106, name: "Netflix (6M Standard)", price: 500.00, currency: "₹", icon: 'film' },
+                { id: 107, name: "Netflix (6M 4K UHD)", price: 650.00, currency: "₹", icon: 'film' },
+                
+                // Retained other streaming services (using original $ pricing)
+                { id: 102, name: "Disney+ & Hulu Bundle (3 Months)", price: 24.50, currency: "$", icon: 'sparkles' },
+                { id: 103, name: "HBO Max (6 Months)", price: 39.99, currency: "$", icon: 'clapperboard' },
+                { id: 104, name: "DAZN Sports Pass (1 Year)", price: 150.00, currency: "$", icon: 'zap' }
+            ],
+            GAMING: [
+                { id: 201, name: "Steam Account (AAA Games Bundle)", price: 35.00, currency: "$", icon: 'controller' },
+                { id: 202, name: "FiveM Ready Account", price: 12.00, currency: "$", icon: 'users' },
+                { id: 203, name: "UFC/NBA Premium Access (1 Year)", price: 55.00, currency: "$", icon: 'dribbble' }
+            ],
+            SECURITY: [
+                { id: 301, name: "NordVPN Premium (1 Year)", price: 29.99, currency: "$", icon: 'lock' },
+                { id: 302, name: "ExpressVPN Pro (6 Months)", price: 19.99, currency: "$", icon: 'shield' },
+                { id: 303, name: "PureVPN Global (Lifetime)", price: 99.00, currency: "$", icon: 'cloud' }
+            ],
+            PRODUCTIVITY: [
+                { id: 401, name: "Canva Pro (1 Year)", price: 19.99, currency: "$", icon: 'layout-grid' },
+                { id: 402, name: "ChatGPT 4 (1 Month)", price: 14.99, currency: "$", icon: 'bot' },
+                { id: 403, name: "Filmora Pro Editor (3 Months)", price: 29.99, currency: "$", icon: 'video' },
+                { id: 404, name: "Duolingo+ (6 Months)", price: 15.00, currency: "$", icon: 'speech' }
+            ]
+        };
+
+        // --- STATE MANAGEMENT ---
+        let currentView = 'home';
+        let cart = []; // { id: number, name: string, price: number, quantity: number, currency: string }
+
+        // --- TEMPLATE TO RESTORE CART SUMMARY ---
+        const CART_SUMMARY_CONTENT_TEMPLATE = `
+            <p class="flex justify-between text-2xl font-bold mb-4">
+                <span>Total:</span>
+                <span id="cart-total" class="neon-magenta">₹0.00</span>
+            </p>
+            <div id="cart-message" class="text-center text-gray-400 mb-4">Your cart is empty.</div>
+            
+            <button id="checkout-button" onclick="checkout()" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button hidden-view">
+                Proceed to Checkout
+            </button>
+            <button id="back-to-shop-button" onclick="switchView('home')" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
+                Continue Shopping
+            </button>
+        `;
+
+        // --- VIEW MANAGEMENT ---
+        function switchView(viewName, category = '') {
+            currentView = viewName;
+            
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden-view'));
+            
+            const targetView = document.getElementById(viewName + '-view');
+            if (targetView) {
+                targetView.classList.remove('hidden-view');
+            } else {
+                console.error("View not found:", viewName);
+            }
+
+            if (viewName === 'products' && category) {
+                document.getElementById('product-category-title').textContent = category.toUpperCase();
+                renderProducts(category);
+            }
+
+            if (viewName === 'cart') {
+                renderCart();
+            }
+        }
+
+        // --- PRODUCT RENDERING (No change) ---
+        function renderProducts(category) {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+            
+            const categoryProducts = productsData[category];
+            if (!categoryProducts) return productList.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found for this category.</p>`;
+
+            categoryProducts.forEach(product => {
+                const productCard = `
+                    <div class="p-6 rounded-xl neon-glow-border transition-all duration-300">
+                        <div class="flex items-center mb-3">
+                            <i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i>
+                            <h3 class="font-bold text-xl neon-cyan">${product.name}</h3>
+                        </div>
+                        <p class="text-3xl font-extrabold mb-4 neon-magenta">${product.currency}${product.price.toFixed(2)}</p>
+                        <p class="text-sm text-gray-400 mb-4">Affordable, verified access. Delivery within minutes.</p>
+                        <button onclick="addToCart(${product.id})" 
+                                class="w-full px-4 py-2 text-sm rounded-lg font-bold bg-green-500 text-gray-900 hover:bg-green-400 transition duration-300">
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+                productList.innerHTML += productCard;
+            });
+            lucide.createIcons(); 
+        }
+
+        // --- CART LOGIC (No major change) ---
+        function findProductById(id) {
+            for (const category in productsData) {
+                const product = productsData[category].find(p => p.id === id);
+                if (product) return product;
+            }
+            return null;
+        }
+
+        function addToCart(productId) {
+            const product = findProductById(productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    currency: product.currency, 
+                    quantity: 1
+                });
+            }
+            updateCartDisplay();
+            console.log("Cart updated:", cart);
+        }
+
+        function removeFromCart(productId) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index > -1) {
+                cart.splice(index, 1);
+                renderCart(); 
+            }
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalCount;
+        }
+
+        function calculateCartTotal(targetCurrency = '₹') {
+            return cart.reduce((total, item) => {
+                if (item.currency === targetCurrency) {
+                    return total + (item.price * item.quantity);
+                }
+                return total;
+            }, 0);
+        }
+
+        function renderCart() {
+            const summaryContainer = document.getElementById('cart-summary');
+
+            // Check if the cart summary structure needs restoring (after successful checkout)
+            if (!document.getElementById('cart-total')) {
+                summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE;
+                lucide.createIcons();
+            }
+
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-button');
+            const messageEl = document.getElementById('cart-message');
+            
+            container.innerHTML = '';
+            
+            const inrTotal = calculateCartTotal('₹');
+            const usdTotal = calculateCartTotal('$');
+            
+            if (cart.length === 0) {
+                totalEl.textContent = '₹0.00';
+                checkoutBtn.classList.add('hidden-view');
+                messageEl.textContent = 'Your cart is empty. Start shopping!';
+                messageEl.classList.remove('hidden-view');
+                return;
+            }
+
+            totalEl.textContent = `₹${inrTotal.toFixed(2)}`;
+
+            if (usdTotal > 0) {
+                 messageEl.textContent = `Note: ₹${inrTotal.toFixed(2)} is the total for items priced in INR. You also have items priced in USD which must be paid separately.`;
+            } else {
+                 messageEl.textContent = `Total items: ${cart.length} product(s) in your cart.`;
+            }
+
+            messageEl.classList.remove('hidden-view');
+            checkoutBtn.classList.remove('hidden-view');
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                
+                const itemHtml = `
+                    <div class="flex justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-700">
+                        <div>
+                            <p class="font-bold neon-cyan">${item.name}</p>
+                            <p class="text-sm text-gray-400">${item.quantity} x ${item.currency}${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-lg font-bold neon-magenta">${item.currency}${itemTotal.toFixed(2)}</span>
+                            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-400 transition duration-200">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+
+            lucide.createIcons(); 
+        }
+
+        // --- INVOICE AND PAYMENT LOGIC ---
+        function generateUpiLink(amount) {
+            // Generates a deep link for UPI payment
+            // pa=Payee Address (Your UPI ID)
+            // pn=Payee Name (PixelFlow)
+            // tn=Transaction Note
+            // am=Amount
+            return `upi://pay?pa=${MERCHANT_UPI_ID}&pn=${MERCHANT_NAME}&tn=PixelFlowOrder&am=${amount.toFixed(2)}`;
+        }
+
+        function checkout() {
+            const inrTotal = calculateCartTotal('₹');
+            const usdTotal = calculateCartTotal('$');
+
+            if (inrTotal === 0 && usdTotal === 0) {
+                 console.error("Cart is empty. Cannot proceed to checkout.");
+                 return;
+            }
+            
+            // --- 1. Generate Invoice Items ---
+            const invoiceListContainer = document.getElementById('invoice-items-list');
+            invoiceListContainer.innerHTML = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                const itemHtml = `
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span>${item.name} (${item.quantity}x)</span>
+                        <span class="font-medium">${item.currency}${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+                invoiceListContainer.innerHTML += itemHtml;
+            });
+
+            // --- 2. Set Final Total and Currency Note ---
+            const finalTotalDisplay = document.getElementById('invoice-total');
+            const currencyNote = document.getElementById('invoice-currency-note');
+            const qrAmountDisplay = document.getElementById('qr-amount');
+            
+            finalTotalDisplay.textContent = `₹${inrTotal.toFixed(2)}`;
+            qrAmountDisplay.textContent = inrTotal.toFixed(2); // Update amount for QR code display
+            
+            if (usdTotal > 0) {
+                currencyNote.classList.remove('hidden-view');
+            } else {
+                currencyNote.classList.add('hidden-view');
+            }
+            
+            // --- 3. Update UPI QR Code Image ---
+            const upiLink = generateUpiLink(inrTotal);
+            const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiLink)}`;
+            
+            document.getElementById('upi-qr-code').src = qrImageUrl;
+
+            // --- 4. Switch View ---
+            switchView('invoice');
+        }
+
+        function confirmPayment() {
+            const summaryContainer = document.getElementById('cart-summary');
+            
+            summaryContainer.innerHTML = `
+                <div class="p-8 text-center">
+                    <i data-lucide="check-circle" class="w-16 h-16 text-green-500 mx-auto mb-4"></i>
+                    <h3 class="text-3xl font-extrabold neon-cyan mb-2">Payment Acknowledged!</h3>
+                    <p class="text-lg text-gray-300 mb-6">Your order has been placed. Details and access credentials will be sent to zeyamalam@gmail.com shortly!</p>
+                    <button onclick="cart = []; switchView('home'); updateCartDisplay();" class="px-6 py-2 text-sm rounded-lg font-bold bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition duration-300">
+                        Done Shopping
+                    </button>
+                </div>
+            `;
+            
+            switchView('cart'); 
+            lucide.createIcons();
+        }
+
+
+        // --- INITIALIZATION ---
+        // Ensure the initial view is set to 'home' and cart display is updated on load.
+        switchView('home');
+        updateCartDisplay();
+    </script>
+</body>
+</html>
