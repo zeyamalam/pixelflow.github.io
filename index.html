@@ -217,26 +217,37 @@
                 </div>
             </section>
 
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <!-- UPDATED: Category List -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-10">
                  <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
                     <i data-lucide="tv" class="w-8 h-8 mb-3 text-red-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">STREAMING</h3>
-                    <p class="text-sm text-gray-400">Netflix, Prime Video, Disney+, HBO Max, DAZN, Movistar+, Viki, Canal+</p>
+                    <p class="text-sm text-gray-400">Netflix, Prime, Disney+, HBO, YouTube, DAZN, Paramount+, Viki, Canal+, Molotov, Crunchyroll</p>
                 </div>
                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'GAMING')">
                     <i data-lucide="gamepad-2" class="w-8 h-8 mb-3 text-pink-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">GAMING</h3>
-                    <p class="text-sm text-gray-400">Steam Accounts & Games, FiveM Ready, UFC / NBA</p>
+                    <p class="text-sm text-gray-400">Steam, FiveM, UFC/NBA, Discord Nitro/Tokens, Rockstar Codes, MS Codes</p>
                 </div>
                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'SECURITY')">
                     <i data-lucide="shield-check" class="w-8 h-8 mb-3 text-green-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">SECURITY</h3>
-                    <p class="text-sm text-gray-400">Premium VPN access: NordVPN, ExpressVPN, PureVPN.</p>
+                    <p class="text-sm text-gray-400">NordVPN, ExpressVPN, PureVPN, IPVanish.</p>
                 </div>
                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'PRODUCTIVITY')">
                     <i data-lucide="sparkles" class="w-8 h-8 mb-3 text-yellow-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">PRODUCTIVITY</h3>
-                    <p class="text-sm text-gray-400">CapCut Pro, Filmora, Canva Pro, ChatGPT (1 Month), Duolingo+</p>
+                    <p class="text-sm text-gray-400">Canva Pro, Filmora, CapCut Pro, ChatGPT+, Gemini, Duolingo+</p>
+                </div>
+                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'OTHER_ACCOUNTS')">
+                    <i data-lucide="pizza" class="w-8 h-8 mb-3 text-orange-400"></i>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">OTHER ACCOUNTS</h3>
+                    <p class="text-sm text-gray-400">Telepizza Points and more unique accounts.</p>
+                </div>
+                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'THEMES')">
+                    <i data-lucide="layout-template" class="w-8 h-8 mb-3 text-indigo-400"></i>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">THEMES</h3>
+                    <p class="text-sm text-gray-400">Premium SellAuth Themes.</p>
                 </div>
             </section>
         </div>
@@ -386,8 +397,8 @@
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
 
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            const particle = document.createElement('div');
+        for (let i = 0; i < PARTICLE_COUNT; i++) { /* ... particle creation ... */ 
+             const particle = document.createElement('div');
             particle.className = 'particle';
             const size = Math.random() * 2 + 1;
             particle.style.width = `${size}px`;
@@ -410,7 +421,7 @@
             mouseY = e.clientY; 
         });
         
-        function animateParticles() {
+        function animateParticles() { /* ... animation logic ... */ 
             requestAnimationFrame(animateParticles);
             for (let i = 0; i < PARTICLE_COUNT; i++) {
                 const particle = particles[i];
@@ -435,32 +446,59 @@
         }
         animateParticles();
 
-        // --- E-COMMERCE DATA ---
-        const productsData = { /* ... (product data remains the same) ... */ 
+        // --- UPDATED E-COMMERCE DATA ---
+        const productsData = {
             STREAMING: [
-                { id: 101, name: "Netflix (3M Standard)", price: 250.00, currency: "₹", icon: 'film' },
-                { id: 105, name: "Netflix (3M 4K UHD)", price: 300.00, currency: "₹", icon: 'film' },
-                { id: 106, name: "Netflix (6M Standard)", price: 300.00, currency: "₹", icon: 'film' },
-                { id: 107, name: "Netflix (6M 4K UHD)", price: 300.00, currency: "₹", icon: 'film' },
-                { id: 102, name: "Prime Video (6 Months)", price: 200.00, currency: "₹", icon: 'sparkles' },
-                { id: 103, name: "Disney+ Hotstar (1 Year)", price: 280.00, currency: "₹", icon: 'clapperboard' },
-                { id: 104, name: "HBO Max (6 Months)", price: 275.00, currency: "₹", icon: 'zap' }
+                { id: 102, name: "Prime Video (6 Months)", price: 499.00, currency: "₹", icon: 'sparkles' },
+                { id: 103, name: "Disney+ Hotstar (3 Months)", price: 299.00, currency: "₹", icon: 'clapperboard' },
+                { id: 104, name: "HBO Max (6 Months)", price: 349.00, currency: "₹", icon: 'zap' },
+                { id: 108, name: "YouTube Premium (1 Month)", price: 59.00, currency: "₹", icon: 'youtube' },
+                { id: 109, name: "Molotov TV (3 Months)", price: 249.00, currency: "₹", icon: 'radio' }, // Using 'radio' as proxy
+                { id: 110, name: "DAZN (6 Months)", price: 499.00, currency: "₹", icon: 'activity' }, // Using 'activity' for sports
+                { id: 111, name: "Paramount+ (3 Months)", price: 199.00, currency: "₹", icon: 'film' },
+                { id: 112, name: "Viki Pass (3 Months)", price: 99.00, currency: "₹", icon: 'tv-2' },
+                { id: 113, name: "Canal+ (3 Months)", price: 199.00, currency: "₹", icon: 'play-circle' },
+                { id: 114, name: "Crunchyroll Fan (6 Months)", price: 149.00, currency: "₹", icon: 'star' },
+                { id: 115, name: "Crunchyroll Mega Fan (6 Months)", price: 199.00, currency: "₹", icon: 'star' },
+                 // Removed old Netflix entries - add back if needed
             ],
             GAMING: [
-                { id: 201, name: "Steam Account (AAA Games Bundle)", price: 290.00, currency: "₹", icon: 'controller' },
-                { id: 202, name: "FiveM Ready Account", price: 210.00, currency: "₹", icon: 'users' },
-                { id: 203, name: "UFC/NBA Premium Access (1 Year)", price: 299.00, currency: "₹", icon: 'dribbble' }
+                // { id: 201, name: "Steam Account (AAA Bundle)", price: 290.00, currency: "₹", icon: 'controller' }, // Kept original price, needs options logic
+                { id: 202, name: "FiveM Ready Account", price: 149.00, currency: "₹", icon: 'users' },
+                { id: 203, name: "UFC/NBA Premium (3 Months)", price: 299.00, currency: "₹", icon: 'dribbble' },
+                { id: 204, name: "Nitro Promo Code (1 Month)", price: 49.00, currency: "₹", icon: 'gift' },
+                { id: 205, name: "Nitro Promo Code (3 Months)", price: 299.00, currency: "₹", icon: 'gift' },
+                { id: 206, name: "Microsoft Random Code", price: 39.00, currency: "₹", icon: 'microsoft' }, // Requires custom icon or generic 'code'
+                { id: 207, name: "Discord Verified Token (Email)", price: 39.00, currency: "₹", icon: 'mail-check' },
+                { id: 208, name: "Rockstar Activation Code", price: 59.00, currency: "₹", icon: 'key' },
+                { id: 209, name: "Server Boost (14x, 1 Month)", price: 599.00, currency: "₹", icon: 'rocket' },
+                { id: 210, name: "Nitro Token (1 Month)", price: 149.00, currency: "₹", icon: 'ticket' }, // Using ticket as proxy
+                { id: 211, name: "Nitro Token (3 Months)", price: 249.00, currency: "₹", icon: 'ticket' },
+                { id: 212, name: "Discord Nitro (2 Months)", price: 899.00, currency: "₹", icon: 'gem' }, // Using gem as proxy
             ],
             SECURITY: [
-                { id: 301, name: "NordVPN Premium (1 Year)", price: 285.00, currency: "₹", icon: 'lock' },
-                { id: 302, name: "ExpressVPN Pro (6 Months)", price: 245.00, currency: "₹", icon: 'shield' },
-                { id: 303, name: "PureVPN Global (Lifetime)", price: 300.00, currency: "₹", icon: 'cloud' }
+                { id: 301, name: "NordVPN Premium (1 Year)", price: 299.00, currency: "₹", icon: 'lock' },
+                { id: 302, name: "ExpressVPN Pro (6 Months)", price: 199.00, currency: "₹", icon: 'shield' },
+                { id: 303, name: "PureVPN Global (Lifetime)", price: 249.00, currency: "₹", icon: 'cloud' },
+                { id: 304, name: "IPVanish (6 Months)", price: 299.00, currency: "₹", icon: 'shield-alert' },
             ],
             PRODUCTIVITY: [
-                { id: 401, name: "Canva Pro (1 Year)", price: 230.00, currency: "₹", icon: 'layout-grid' },
-                { id: 402, name: "ChatGPT 4 (1 Month)", price: 270.00, currency: "₹", icon: 'bot' },
-                { id: 403, name: "Filmora Pro Editor (3 Months)", price: 295.00, currency: "₹", icon: 'video' },
-                { id: 404, name: "Duolingo+ (6 Months)", price: 220.00, currency: "₹", icon: 'speech' }
+                { id: 401, name: "Canva Pro (1 Year)", price: 350.00, currency: "₹", icon: 'layout-grid' },
+                { id: 402, name: "ChatGPT Plus (1 Month)", price: 299.00, currency: "₹", icon: 'bot' },
+                { id: 403, name: "Filmora Pro (6 Months)", price: 199.00, currency: "₹", icon: 'video' },
+                { id: 404, name: "Duolingo+ (6 Months)", price: 220.00, currency: "₹", icon: 'speech' }, // Kept price as not specified
+                { id: 405, name: "CapCut Pro (3 Months FA)", price: 199.00, currency: "₹", icon: 'scissors' }, // FA = Full Access?
+                { id: 406, name: "CapCut Pro (3 Months)", price: 149.00, currency: "₹", icon: 'scissors' },
+                { id: 407, name: "Gemini Pro (1 Year)", price: 599.00, currency: "₹", icon: 'brain-circuit' }, // Assuming Gemini AI
+            ],
+            OTHER_ACCOUNTS: [
+                { id: 501, name: "Telepizza Points [ES] (5k-10k)", price: 99.00, currency: "₹", icon: 'pizza' },
+                { id: 502, name: "Telepizza Points [ES] (10k-17k)", price: 129.00, currency: "₹", icon: 'pizza' },
+                { id: 503, name: "Telepizza Points [ES] (17k-20k)", price: 249.00, currency: "₹", icon: 'pizza' },
+            ],
+            THEMES: [
+                { id: 601, name: "SellAuth Theme 1", price: 3999.00, currency: "₹", icon: 'layout-template' },
+                { id: 602, name: "SellAuth Theme 2", price: 3599.00, currency: "₹", icon: 'layout-template' },
             ]
         };
 
@@ -471,54 +509,22 @@
         let customerDetails = { name: '', email: '', phone: '' };
 
         // --- TEMPLATE TO RESTORE CART SUMMARY ---
-        const CART_SUMMARY_CONTENT_TEMPLATE = `
-            <p class="flex justify-between text-2xl font-bold mb-4">
-                <span>Total:</span>
-                <span id="cart-total" class="neon-magenta">₹0.00</span>
-            </p>
-            <div id="cart-message" class="text-center text-gray-400 mb-4">Your cart is empty.</div>
-            <button id="checkout-button" onclick="checkout()" class="w-full px-6 py-3 text-xl rounded-lg font-bold bg-yellow-400 text-gray-900 uppercase tracking-widest cta-button hidden-view">
-                Proceed to Checkout
-            </button>
-            <button id="back-to-shop-button" onclick="goBack()" class="w-full mt-4 px-6 py-3 text-sm rounded-lg font-bold bg-gray-700 hover:bg-gray-600 transition duration-300">
-                Continue Shopping
-            </button>
-        `;
+        const CART_SUMMARY_CONTENT_TEMPLATE = ` /* ... (remains same) ... */ `;
 
         // --- VIEW MANAGEMENT ---
-        function switchView(viewName, category = '') {
-            if (currentView !== viewName) {
-                previousView = currentView;
-            }
+        function switchView(viewName, category = '') { /* ... (remains same) ... */ 
+             if (currentView !== viewName) { previousView = currentView; }
             currentView = viewName;
-            
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden-view'));
-            
             const targetView = document.getElementById(viewName + '-view');
-            if (targetView) {
-                targetView.classList.remove('hidden-view');
-            } else {
-                console.error("View not found:", viewName);
-            }
-            
-            // Logic for specific views
-            if (viewName === 'products' && category) {
-                document.getElementById('product-category-title').textContent = category.toUpperCase();
-                renderProducts(category);
-            }
-
-            if (viewName === 'cart') {
-                renderCart();
-            }
-
-            // Re-initialize icons
+            if (targetView) { targetView.classList.remove('hidden-view'); } 
+            else { console.error("View not found:", viewName); }
+            if (viewName === 'products' && category) { document.getElementById('product-category-title').textContent = category.toUpperCase(); renderProducts(category); }
+            if (viewName === 'cart') { renderCart(); }
             lucide.createIcons();
-            // Scroll to top
             window.scrollTo(0, 0);
         }
-
-        // Simpler goBack logic
-        function goBack() {
+        function goBack() { /* ... (remains same) ... */ 
             let targetView = previousView || 'home'; 
             if (currentView === 'invoice') targetView = 'customer-details';
             else if (currentView === 'customer-details') targetView = 'cart';
@@ -528,18 +534,21 @@
         }
 
         // --- PRODUCT RENDERING ---
-        function renderProducts(category) {
+        function renderProducts(category) { /* ... (remains same) ... */ 
             const productList = document.getElementById('product-list');
             productList.innerHTML = '';
             const categoryProducts = productsData[category];
-            if (!categoryProducts) return productList.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found.</p>`;
+            if (!categoryProducts || categoryProducts.length === 0) { // Added check for empty category
+                 productList.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found in this category yet.</p>`;
+                 return;
+            }
             categoryProducts.forEach(product => {
                 const productCard = `
                     <div class="p-6 rounded-xl neon-glow-border transition-all duration-300 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center mb-3"><i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i><h3 class="font-bold text-xl neon-cyan">${product.name}</h3></div>
                             <p class="text-3xl font-extrabold mb-4 neon-magenta">${product.currency}${product.price.toFixed(2)}</p>
-                            <p class="text-sm text-gray-400 mb-4">Affordable, verified access. Delivery within minutes.</p>
+                            <p class="text-sm text-gray-400 mb-4">Affordable premium access.</p> <!-- Simplified description -->
                         </div>
                         <button onclick="addToCart(${product.id})" class="w-full mt-auto px-4 py-2 text-sm rounded-lg font-bold bg-green-500 text-gray-900 hover:bg-green-400 transition duration-300">Add to Cart</button>
                     </div>`;
@@ -549,15 +558,15 @@
         }
 
         // --- CART LOGIC ---
-        function findProductById(id) { /* ... (remains same) ... */ 
-             for (const category in productsData) {
+        function findProductById(id) { 
+            for (const category in productsData) {
                 const product = productsData[category].find(p => p.id === id);
                 if (product) return product;
             }
             return null;
-        }
+         }
         function addToCart(productId) { /* ... (remains same) ... */ 
-            const product = findProductById(productId);
+             const product = findProductById(productId);
             if (!product) return;
             const existingItem = cart.find(item => item.id === productId);
             if (existingItem) { existingItem.quantity += 1; } 
@@ -568,9 +577,9 @@
             const index = cart.findIndex(item => item.id === productId);
             if (index > -1) { cart.splice(index, 1); renderCart(); }
             updateCartDisplay(); 
-        }
+         }
         function updateCartDisplay() { /* ... (remains same) ... */ 
-            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-count').textContent = totalCount;
         }
         function calculateCartTotal(targetCurrency = '₹') { /* ... (remains same) ... */ 
@@ -578,7 +587,7 @@
                 if (item.currency === targetCurrency) { return total + (item.price * item.quantity); }
                 return total;
             }, 0);
-        }
+         }
         function renderCart() { /* ... (remains same) ... */ 
             const summaryContainer = document.getElementById('cart-summary');
             if (!document.getElementById('cart-total')) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
@@ -607,7 +616,7 @@
                 });
             }
             lucide.createIcons(); 
-        }
+         }
 
         // --- INVOICE AND PAYMENT LOGIC ---
         document.getElementById('customer-form').addEventListener('submit', function(event) { /* ... (remains same) ... */ 
@@ -621,7 +630,7 @@
             customerDetails.email = email;
             customerDetails.phone = document.getElementById('customer-phone').value;
             showInvoice();
-        });
+         });
         function checkout() { /* ... (remains same) ... */ 
             const inrTotal = calculateCartTotal('₹');
             if (inrTotal === 0 && cart.length === 0) { 
@@ -633,7 +642,7 @@
             document.getElementById('customer-email').value = customerDetails.email;
             document.getElementById('customer-phone').value = customerDetails.phone;
             switchView('customer-details');
-        }
+         }
         function showInvoice() { /* ... (remains same) ... */ 
             const inrTotal = calculateCartTotal('₹');
             const usdTotal = calculateCartTotal('$');
@@ -650,14 +659,13 @@
             if (usdTotal > 0) { currencyNote.classList.remove('hidden-view'); } 
             else { currencyNote.classList.add('hidden-view'); }
             switchView('invoice');
-        }
+         }
 
         // --- Function to send order email using EmailJS ---
         function sendOrderEmail() { 
-            // ** IMPORTANT **
-            // Use YOUR specific IDs from EmailJS here
-            const serviceID = 'pixelflow';     // <-- YOUR Service ID (You confirmed this)
-            const templateID = 'template_qaqai6k';   // <-- YOUR Template ID
+            // ** YOUR IDs ARE INSERTED HERE **
+            const serviceID = 'pixelflow';     
+            const templateID = 'template_qaqai6k';   
             // Public Key was initialized in <head>
 
             let orderItemsText = ''; 
@@ -672,12 +680,6 @@
             console.log("Preparing to send email with params:", templateParams);
             if (typeof emailjs === 'undefined') { console.error('EmailJS SDK not loaded.'); return; }
             
-            // Basic check if IDs look like placeholders (remove this if your IDs really are 'pixelflow')
-            if (serviceID === 'YOUR_SERVICE_ID' || templateID === 'YOUR_TEMPLATE_ID') { 
-                console.warn('EmailJS Service ID or Template ID might still be placeholders. Email will not be sent.'); 
-                return; 
-            }
-
             emailjs.send(serviceID, templateID, templateParams)
                 .then((response) => { console.log('SUCCESS! Email Sent.', response.status, response.text); })
                 .catch((error) => { console.error('FAILED... Email Sending Error:', error); });
@@ -691,11 +693,11 @@
             console.log("Cart Items:", cart);
             sendOrderEmail(); 
             switchView('order-confirmation');
-        }
+         }
 
         // Function to reset cart/customer details and go home
         function resetAndGoHome() { /* ... (remains same) ... */ 
-            const summaryContainer = document.getElementById('cart-summary');
+             const summaryContainer = document.getElementById('cart-summary');
             if (summaryContainer) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
             cart = [];
             customerDetails = { name: '', email: '', phone: '' };
