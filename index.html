@@ -495,12 +495,10 @@
         // --- UPDATED E-COMMERCE DATA ---
         const productsData = {
             STREAMING: [
-                 // Special entry for Netflix - acts as a link
                 { id: 900, name: "Netflix Plans", isCategoryLink: true, targetView: 'netflix-plans', icon: 'film' }, 
-                // Updated Prime Video
                 { id: 101, name: "Prime Video (1 Month)", price: 149.00, currency: "₹", icon: 'sparkles' },
-                { id: 102, name: "Prime Video (6M Unlimited Replacements)", price: 399.00, currency: "₹", icon: 'sparkles' },
-                // Other streaming services
+                // CORRECTED SPELLING: Replacement
+                { id: 102, name: "Prime Video (6M Unlimited Replacement)", price: 399.00, currency: "₹", icon: 'sparkles' }, 
                 { id: 103, name: "Disney+ Hotstar (3 Months)", price: 299.00, currency: "₹", icon: 'clapperboard' },
                 { id: 104, name: "HBO Max (6 Months)", price: 349.00, currency: "₹", icon: 'zap' },
                 { id: 108, name: "YouTube Premium (1 Month)", price: 59.00, currency: "₹", icon: 'youtube' },
@@ -512,13 +510,13 @@
                 { id: 114, name: "Crunchyroll Fan (6 Months)", price: 149.00, currency: "₹", icon: 'star' },
                 { id: 115, name: "Crunchyroll Mega Fan (6 Months)", price: 199.00, currency: "₹", icon: 'star' },
             ],
-             // NEW Category for specific Netflix plans
+            // CORRECTED SPELLING: Replacement
             NETFLIX_PLANS: [
-                { id: 701, name: "Netflix 4K (1M, No Replace)", price: 119.00, currency: "₹", icon: 'film' },
-                { id: 702, name: "Netflix Standard VPN (3M, No Replace)", price: 49.00, currency: "₹", icon: 'film' },
-                { id: 703, name: "Netflix 4K (6M, Unlimited Replace)", price: 599.00, currency: "₹", icon: 'film' },
-                { id: 704, name: "Netflix Standard (6M, No Replace)", price: 199.00, currency: "₹", icon: 'film' },
-                { id: 705, name: "Netflix 4K (6M, No Replace)", price: 299.00, currency: "₹", icon: 'film' },
+                { id: 701, name: "Netflix 4K (1M, No Replacement)", price: 119.00, currency: "₹", icon: 'film' },
+                { id: 702, name: "Netflix Standard VPN (3M, No Replacement)", price: 49.00, currency: "₹", icon: 'film' },
+                { id: 703, name: "Netflix 4K (6M, Unlimited Replacement)", price: 599.00, currency: "₹", icon: 'film' },
+                { id: 704, name: "Netflix Standard (6M, No Replacement)", price: 199.00, currency: "₹", icon: 'film' },
+                { id: 705, name: "Netflix 4K (6M, No Replacement)", price: 299.00, currency: "₹", icon: 'film' },
             ],
             GAMING: [
                 { id: 202, name: "FiveM Ready Account", price: 149.00, currency: "₹", icon: 'users' },
@@ -588,7 +586,7 @@
             
             const targetView = document.getElementById(viewName + '-view');
             if (targetView) { targetView.classList.remove('hidden-view'); } 
-            else { console.error("View not found:", viewName); return; } // Added return on error
+            else { console.error("View not found:", viewName); return; } 
             
             // Handle rendering based on view type
             if (viewName === 'products' && category) { 
@@ -694,7 +692,6 @@
         // --- CART LOGIC ---
         function findProductById(id) { 
              for (const category in productsData) {
-                 // Check if the category is an array before trying to find in it
                  if(Array.isArray(productsData[category])) { 
                      const product = productsData[category].find(p => p.id === id);
                      if (product) return product;
@@ -704,13 +701,12 @@
          }
 
         function updateProductCardUI(productId) {
-            // Check both general product list and netflix list
             const productCard = document.querySelector(`#product-list .product-card[data-product-id="${productId}"]`) || 
                                 document.querySelector(`#netflix-plan-list .product-card[data-product-id="${productId}"]`);
             if (!productCard) return; 
 
             const actionArea = productCard.querySelector('.product-action-area');
-            if (!actionArea) return; // Only update cards that have an action area
+            if (!actionArea) return; 
 
             const cartItem = cart.find(item => item.id === productId);
 
@@ -723,7 +719,7 @@
 
         function addToCart(productId) { 
             const product = findProductById(productId);
-            if (!product || product.isCategoryLink) return; // Prevent adding category links
+            if (!product || product.isCategoryLink) return; 
             
             let cartItem = cart.find(item => item.id === productId);
 
@@ -777,7 +773,7 @@
         function calculateCartTotal(targetCurrency = '₹') { 
             return cart.reduce((total, item) => {
                 const product = findProductById(item.id); 
-                if (product && !product.isCategoryLink && product.currency === targetCurrency) { // Ensure it's not a category link
+                if (product && !product.isCategoryLink && product.currency === targetCurrency) { 
                     return total + (product.price * item.quantity); 
                 }
                 return total;
@@ -930,21 +926,28 @@
         function resetAndGoHome() { 
              const summaryContainer = document.getElementById('cart-summary');
             if (summaryContainer) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
-            cart = [];
-            customerDetails = { name: '', email: '', phone: '' };
-            updateCartDisplay();
             
-            // Re-render product cards if on a product view to reset buttons
-            if (currentView.startsWith('products') || currentView === 'netflix-plans') {
-                const category = currentView === 'netflix-plans' ? 'NETFLIX_PLANS' : previousView.split('-')[1]?.toUpperCase(); 
-                 if (category) {
-                     // Need to determine which container to re-render
-                     const containerId = currentView === 'netflix-plans' ? 'netflix-plan-list' : 'product-list';
-                     renderProducts(containerId, category); 
-                 }
+            // Get current category before resetting cart/view
+            let currentCategory = null;
+            if (currentView.startsWith('products')) {
+                 currentCategory = document.getElementById('product-category-title')?.textContent?.toUpperCase();
+            } else if (currentView === 'netflix-plans') {
+                 currentCategory = 'NETFLIX_PLANS';
+            }
+
+            cart = []; // Clear the cart
+            customerDetails = { name: '', email: '', phone: '' };
+            updateCartDisplay(); // Update cart icon
+            
+            // If we were on a product page, re-render it to reset buttons AFTER cart is cleared
+            if (currentCategory) {
+                 const containerId = currentView === 'netflix-plans' ? 'netflix-plan-list' : 'product-list';
+                 renderProducts(containerId, currentCategory); 
             } 
-            switchView('home'); // Go home regardless
+            
+            switchView('home'); // Finally, switch to home view
         }
+
 
         // --- INITIALIZATION ---
         switchView('home'); 
