@@ -40,6 +40,10 @@
             color: #00FFFF;
             text-shadow: 0 0 5px rgba(0, 255, 255, 0.7), 0 0 15px rgba(0, 255, 255, 0.4);
         }
+         /* Apply text-shadow to SVG fill as well */
+        .neon-cyan svg {
+            filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.7)) drop-shadow(0 0 15px rgba(0, 255, 255, 0.4));
+        }
         .neon-magenta {
             color: #FF00FF;
             text-shadow: 0 0 5px rgba(255, 0, 255, 0.7), 0 0 15px rgba(255, 0, 255, 0.4);
@@ -196,7 +200,7 @@
              text-align: center;
         }
 
-        /* FIXED: Apply Inter font explicitly and ensure normal tracking */
+        /* Apply Inter font explicitly and ensure normal tracking */
         .view-section h2 {
              font-family: 'Inter', sans-serif;
              letter-spacing: normal; /* Override any wider tracking */
@@ -234,7 +238,6 @@
         <!-- Home View -->
         <div id="home-view" class="view-section">
             <header class="text-center pt-4 pb-6"> 
-                <!-- FIXED: Added tracking-normal -->
                 <h1 class="text-6xl sm:text-7xl font-extrabold mb-3 leading-tight tracking-normal"> 
                     <span class="neon-cyan">PREMIUM</span> <span class="neon-magenta">ACCESS.</span>
                 </h1>
@@ -257,7 +260,7 @@
                 </div>
             </section>
 
-            <!-- UPDATED: Category List Grid -->
+            <!-- Category List Grid -->
             <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                  <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
                     <i data-lucide="tv" class="w-8 h-8 mb-3 text-red-400"></i>
@@ -279,13 +282,11 @@
                     <h3 class="font-bold text-xl mb-2 neon-cyan">SECURITY</h3>
                     <p class="text-sm text-gray-400">NordVPN, ExpressVPN, PureVPN, IPVanish.</p>
                 </div>
-                 <!-- FIXED: Updated onclick and text -->
                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'LEARNING_EDITING')">
                     <i data-lucide="edit" class="w-8 h-8 mb-3 text-yellow-400"></i> 
                     <h3 class="font-bold text-xl mb-2 neon-cyan">LEARNING & EDITING</h3>
                     <p class="text-sm text-gray-400">Canva Pro, Filmora, CapCut Pro, ChatGPT+, Gemini, Duolingo+</p>
                 </div>
-                 <!-- FIXED: Updated onclick and text -->
                  <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'TELEPIZZA')">
                     <i data-lucide="pizza" class="w-8 h-8 mb-3 text-orange-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">TELEPIZZA POINTS</h3>
@@ -303,7 +304,6 @@
         <div id="products-view" class="view-section hidden-view pt-6"> 
             <div class="flex items-center mb-6"> 
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                 <!-- FIXED: Added tracking-normal -->
                 <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow tracking-normal"> 
                     <span id="product-category-title">CATEGORY</span> Products
                 </h2>
@@ -316,7 +316,6 @@
         <div id="netflix-plans-view" class="view-section hidden-view pt-6">
             <div class="flex items-center mb-6"> 
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                 <!-- FIXED: Added tracking-normal -->
                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Netflix Plans</h2>
                  <div class="w-auto invisible" style="min-width: 90px;"></div> 
             </div>
@@ -329,7 +328,6 @@
         <div id="cart-view" class="view-section hidden-view max-w-4xl mx-auto pt-6">
             <div class="flex items-center mb-6">
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                 <!-- FIXED: Added tracking-normal -->
                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Your Cart</h2>
                 <div class="w-auto invisible" style="min-width: 90px;"></div> 
             </div>
@@ -341,7 +339,6 @@
         <div id="customer-details-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
             <div class="flex items-center mb-6">
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                 <!-- FIXED: Added tracking-normal -->
                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Customer Details</h2>
                 <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
@@ -370,7 +367,6 @@
         <div id="invoice-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
             <div class="flex items-center mb-6">
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                 <!-- FIXED: Added tracking-normal -->
                 <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow tracking-normal">Final Invoice & Payment</h2>
                 <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
@@ -414,7 +410,6 @@
         <!-- Order Confirmation View -->
         <div id="order-confirmation-view" class="view-section hidden-view max-w-xl mx-auto text-center pt-16 pb-12">
              <i data-lucide="check-circle" class="w-20 h-20 text-green-500 mx-auto mb-6 animate-pulse"></i>
-              <!-- FIXED: Added tracking-normal -->
             <h2 class="text-4xl font-extrabold mb-4 neon-cyan tracking-normal">Order Received!</h2>
             <p class="text-lg text-gray-300 mb-6">Thank you for your purchase, <strong class="neon-magenta" id="confirmation-customer-name">Customer</strong>!</p>
             <div class="bg-gray-800 p-6 rounded-xl neon-glow-border space-y-4 text-left">
@@ -429,7 +424,6 @@
         <div id="contact-view" class="view-section hidden-view pt-6">
             <div class="flex items-center mb-6">
                  <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                  <!-- FIXED: Added tracking-normal -->
                  <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Contact PixelFlow</h2>
                  <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
@@ -438,10 +432,7 @@
                 <div class="space-y-4">
                     <p class="flex items-center text-lg"><i data-lucide="mail" class="w-5 h-5 mr-3 text-cyan-400"></i> Email: zeyamalam@gmail.com</p>
                     <p class="flex items-center text-lg"><i data-lucide="instagram" class="w-5 h-5 mr-3 text-cyan-400"></i> Instagram: pixel.flow._</p>
-                     <p class="flex items-center text-lg">
-                        <svg class="w-5 h-5 mr-3 text-cyan-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.29 0C19.74 0 18.06.66 17.61 1.07l-2.73 2.73c-3.1 1.04-5.06 4.68-5.32 7.73-.26 3.05.13 5.48.13 5.48l1.32-.48s-.03-.45-.03-.89c0-1.4.6-2.6 1.6-3.41.99-.8 2.37-1.35 3.99-1.35 2.15 0 3.73.89 4.67 1.83.94.94 1.48 2.22 1.48 3.71 0 1.49-.54 2.77-1.48 3.71-.94.94-2.52 1.83-4.67 1.83-1.62 0-3-.55-3.99-1.35-1-.8-1.6-2-1.6-3.41 0-.44-.03-.89-.03-.89l-.17.06-1.15.42s.39 2.43.13 5.48c-.26 3.05-2.22 6.69-5.32 7.73l-2.73 2.73c-.45.41-2.13 1.07-2.68 1.07-.55 0-.96-.41-.96-.96V.96C.04.41.45 0 .99 0c.55 0 2.23.66 2.68 1.07l2.73 2.73c3.1 1.04 5.06 4.68 5.32 7.73.26 3.05-.13 5.48-.13 5.48l-1.32-.48s.03-.45.03-.89c0-1.4-.6-2.6-1.6-3.41-.99-.8-2.37-1.35-3.99-1.35-2.15 0-3.73.89-4.67 1.83-.94.94-1.48 2.22-1.48 3.71 0 1.49.54 2.77 1.48 3.71.94.94 2.52 1.83 4.67 1.83 1.62 0 3-.55 3.99-1.35 1-.8 1.6-2 1.6-3.41 0-.44.03-.89.03-.89l.17.06 1.15.42s-.39 2.43-.13 5.48c.26 3.05 2.22 6.69 5.32 7.73l2.73 2.73c.45.41 2.13 1.07 2.68 1.07.55 0 .96-.41.96-.96V.96c0-.55-.41-.96-.96-.96z"/></svg> 
-                        Discord ID: idontlikeyourscent
-                     </p>
+                     <!-- REMOVED Discord ID paragraph -->
                 </div>
             </section>
         </div>
@@ -533,7 +524,7 @@
                 { id: 113, name: "Canal+ (3 Months)", price: 199.00, currency: "₹", icon: 'play-circle' },
                 { id: 114, name: "Crunchyroll Fan (6 Months)", price: 149.00, currency: "₹", icon: 'star' },
                 { id: 115, name: "Crunchyroll Mega Fan (6 Months)", price: 199.00, currency: "₹", icon: 'star' },
-                { id: 203, name: "UFC/NBA Premium (3 Months)", price: 299.00, currency: "₹", icon: 'dribbble' }, // Moved
+                { id: 203, name: "UFC/NBA Premium (3 Months)", price: 299.00, currency: "₹", icon: 'dribbble' }, 
             ],
             NETFLIX_PLANS: [
                 { id: 701, name: "Netflix 4K (1M, No Replacement)", price: 119.00, currency: "₹", icon: 'film' },
@@ -541,6 +532,8 @@
                 { id: 703, name: "Netflix 4K (6M, Unlimited Replacement)", price: 599.00, currency: "₹", icon: 'film' },
                 { id: 704, name: "Netflix Standard (6M, No Replacement)", price: 199.00, currency: "₹", icon: 'film' },
                 { id: 705, name: "Netflix 4K (6M, No Replacement)", price: 299.00, currency: "₹", icon: 'film' },
+                // ADDED New Plan
+                { id: 706, name: "Netflix Standard (6M, Unlimited Replacement)", price: 399.00, currency: "₹", icon: 'film' },
             ],
             GAMING: [
                 { id: 202, name: "FiveM Ready Account", price: 149.00, currency: "₹", icon: 'users' },
@@ -615,16 +608,15 @@
             
             // Handle rendering based on view type
             if (viewName === 'products' && category) { 
-                 // Format category name for display 
-                 let displayCategory = category; // Default to key
+                 let displayCategory = category; 
                  if(category === 'LEARNING_EDITING') displayCategory = 'Learning & Editing';
                  else if(category === 'TELEPIZZA') displayCategory = 'Telepizza Points';
-                 else displayCategory = category.replace(/_/g, ' '); // Basic formatting for others
+                 else displayCategory = category.replace(/_/g, ' '); 
 
                 document.getElementById('product-category-title').textContent = displayCategory; 
-                renderProducts('product-list', category); // Render generic products
+                renderProducts('product-list', category); 
             } else if (viewName === 'netflix-plans') {
-                 renderProducts('netflix-plan-list', 'NETFLIX_PLANS'); // Render specific Netflix plans
+                 renderProducts('netflix-plan-list', 'NETFLIX_PLANS'); 
             } else if (viewName === 'cart') { 
                 renderCart(); 
             }
@@ -641,7 +633,7 @@
             else if (currentView === 'customer-details') targetView = 'cart';
             else if (currentView === 'order-confirmation') { resetAndGoHome(); return; }
             else if (currentView === 'netflix-plans') targetView = 'home'; 
-            else if (currentView === 'products' || currentView === 'cart' || currentView === 'contact') targetView = 'home'; 
+            else if (['products', 'cart', 'contact'].includes(currentView)) targetView = 'home'; 
             else targetView = 'home'; 
             
             switchView(targetView);
@@ -654,7 +646,7 @@
                  console.error("Product list container not found:", containerId);
                  return;
             }
-            productListContainer.innerHTML = ''; // Clear previous content
+            productListContainer.innerHTML = ''; 
 
             const categoryProducts = productsData[category];
             if (!categoryProducts || categoryProducts.length === 0) { 
@@ -664,39 +656,20 @@
 
             categoryProducts.forEach(product => {
                 let productCardHTML = '';
-                // Special card for category links (like Netflix in STREAMING)
                 if (product.isCategoryLink) {
                      productCardHTML = `
                          <div class="p-6 rounded-xl neon-glow-border transition-all duration-300 flex flex-col justify-between" onclick="switchView('${product.targetView}')">
-                            <div>
-                                <div class="flex items-center mb-3">
-                                    <i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i>
-                                    <h3 class="font-bold text-xl neon-cyan">${product.name}</h3>
-                                </div>
-                                <p class="text-sm text-gray-400 mb-4">Click to see available plans & pricing.</p> 
-                            </div>
-                            <button class="w-full mt-auto px-4 py-2 text-sm rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-500 transition duration-300">
-                                View Plans
-                            </button>
+                            <div> <div class="flex items-center mb-3"><i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i><h3 class="font-bold text-xl neon-cyan">${product.name}</h3></div> <p class="text-sm text-gray-400 mb-4">Click to see available plans & pricing.</p> </div>
+                            <button class="w-full mt-auto px-4 py-2 text-sm rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-500 transition duration-300"> View Plans </button>
                          </div>`;
                 } 
-                // Standard product card
                 else {
                     const cartItem = cart.find(item => item.id === product.id);
                     const quantity = cartItem ? cartItem.quantity : 0;
                     productCardHTML = `
                         <div class="product-card p-6 rounded-xl neon-glow-border transition-all duration-300 flex flex-col justify-between" data-product-id="${product.id}">
-                            <div>
-                                <div class="flex items-center mb-3">
-                                    <i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i>
-                                    <h3 class="font-bold text-xl neon-cyan">${product.name}</h3>
-                                </div>
-                                <p class="text-3xl font-extrabold mb-4 neon-magenta">${product.currency}${product.price.toFixed(2)}</p>
-                                <p class="text-sm text-gray-400 mb-4">Affordable premium access.</p> 
-                            </div>
-                            <div class="mt-auto product-action-area">
-                                ${quantity > 0 ? getQuantityControlHTML(product.id, quantity) : getAddToCartButtonHTML(product.id) }
-                            </div>
+                            <div> <div class="flex items-center mb-3"><i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i><h3 class="font-bold text-xl neon-cyan">${product.name}</h3></div> <p class="text-3xl font-extrabold mb-4 neon-magenta">${product.currency}${product.price.toFixed(2)}</p> <p class="text-sm text-gray-400 mb-4">Affordable premium access.</p> </div>
+                            <div class="mt-auto product-action-area"> ${quantity > 0 ? getQuantityControlHTML(product.id, quantity) : getAddToCartButtonHTML(product.id) } </div>
                         </div>`;
                 }
                 productListContainer.innerHTML += productCardHTML;
@@ -745,7 +718,7 @@
             } else {
                 actionArea.innerHTML = getAddToCartButtonHTML(productId);
             }
-             lucide.createIcons(); // Re-render icons if quantity control added/removed them
+             lucide.createIcons(); 
         }
 
         function addToCart(productId) { 
@@ -978,4 +951,5 @@
     </script>
 </body>
 </html>
+
 
