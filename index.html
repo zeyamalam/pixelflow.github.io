@@ -196,6 +196,12 @@
              text-align: center;
         }
 
+        /* FIXED: Apply Inter font explicitly and ensure normal tracking */
+        .view-section h2 {
+             font-family: 'Inter', sans-serif;
+             letter-spacing: normal; /* Override any wider tracking */
+        }
+
     </style>
 </head>
 <body class="min-h-screen">
@@ -228,7 +234,8 @@
         <!-- Home View -->
         <div id="home-view" class="view-section">
             <header class="text-center pt-4 pb-6"> 
-                <h1 class="text-6xl sm:text-7xl font-extrabold mb-3 leading-tight">
+                <!-- FIXED: Added tracking-normal -->
+                <h1 class="text-6xl sm:text-7xl font-extrabold mb-3 leading-tight tracking-normal"> 
                     <span class="neon-cyan">PREMIUM</span> <span class="neon-magenta">ACCESS.</span>
                 </h1>
                 <h2 class="text-3xl sm:text-4xl font-light tracking-wide text-gray-300 mb-6">
@@ -250,32 +257,39 @@
                 </div>
             </section>
 
-            <!-- Category List -->
-            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-10">
+            <!-- UPDATED: Category List Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                  <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
                     <i data-lucide="tv" class="w-8 h-8 mb-3 text-red-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">STREAMING</h3>
-                    <p class="text-sm text-gray-400">Netflix, Prime, Disney+, HBO, YouTube, DAZN, Paramount+, Viki, Canal+, Molotov, Crunchyroll</p>
+                    <p class="text-sm text-gray-400">Netflix, Prime, Disney+, HBO, YouTube, DAZN, Paramount+, UFC/NBA, Viki, Canal+, Molotov, Crunchyroll</p>
                 </div>
                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'GAMING')">
                     <i data-lucide="gamepad-2" class="w-8 h-8 mb-3 text-pink-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">GAMING</h3>
-                    <p class="text-sm text-gray-400">Steam, FiveM, UFC/NBA, Discord Nitro/Tokens, Rockstar Codes, MS Codes</p>
+                    <p class="text-sm text-gray-400">Steam, FiveM, Rockstar Codes, MS Codes</p>
+                </div>
+                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'DISCORD')">
+                    <i data-lucide="message-square" class="w-8 h-8 mb-3 text-blue-400"></i>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">DISCORD</h3>
+                    <p class="text-sm text-gray-400">Nitro Promos, Tokens, Verified Tokens, Server Boosts</p>
                 </div>
                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'SECURITY')">
                     <i data-lucide="shield-check" class="w-8 h-8 mb-3 text-green-400"></i>
                     <h3 class="font-bold text-xl mb-2 neon-cyan">SECURITY</h3>
                     <p class="text-sm text-gray-400">NordVPN, ExpressVPN, PureVPN, IPVanish.</p>
                 </div>
-                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'PRODUCTIVITY')">
-                    <i data-lucide="sparkles" class="w-8 h-8 mb-3 text-yellow-400"></i>
-                    <h3 class="font-bold text-xl mb-2 neon-cyan">PRODUCTIVITY</h3>
+                 <!-- FIXED: Updated onclick and text -->
+                <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'LEARNING_EDITING')">
+                    <i data-lucide="edit" class="w-8 h-8 mb-3 text-yellow-400"></i> 
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">LEARNING & EDITING</h3>
                     <p class="text-sm text-gray-400">Canva Pro, Filmora, CapCut Pro, ChatGPT+, Gemini, Duolingo+</p>
                 </div>
-                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'OTHER_ACCOUNTS')">
+                 <!-- FIXED: Updated onclick and text -->
+                 <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'TELEPIZZA')">
                     <i data-lucide="pizza" class="w-8 h-8 mb-3 text-orange-400"></i>
-                    <h3 class="font-bold text-xl mb-2 neon-cyan">OTHER ACCOUNTS</h3>
-                    <p class="text-sm text-gray-400">Telepizza Points and more unique accounts.</p>
+                    <h3 class="font-bold text-xl mb-2 neon-cyan">TELEPIZZA POINTS</h3>
+                    <p class="text-sm text-gray-400">Spanish Telepizza Points accounts.</p>
                 </div>
                  <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'THEMES')">
                     <i data-lucide="layout-template" class="w-8 h-8 mb-3 text-indigo-400"></i>
@@ -289,23 +303,24 @@
         <div id="products-view" class="view-section hidden-view pt-6"> 
             <div class="flex items-center mb-6"> 
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow"> 
+                 <!-- FIXED: Added tracking-normal -->
+                <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow tracking-normal"> 
                     <span id="product-category-title">CATEGORY</span> Products
                 </h2>
-                 <div class="w-auto invisible" style="min-width: 90px;"></div> <!-- Placeholder -->
+                 <div class="w-auto invisible" style="min-width: 90px;"></div> 
             </div>
             <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"> </div>
         </div>
 
-        <!-- NEW: Netflix Plans View -->
+        <!-- Netflix Plans View -->
         <div id="netflix-plans-view" class="view-section hidden-view pt-6">
             <div class="flex items-center mb-6"> 
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Netflix Plans</h2>
-                 <div class="w-auto invisible" style="min-width: 90px;"></div> <!-- Placeholder -->
+                 <!-- FIXED: Added tracking-normal -->
+                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Netflix Plans</h2>
+                 <div class="w-auto invisible" style="min-width: 90px;"></div> 
             </div>
             <div id="netflix-plan-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"> 
-                <!-- Specific Netflix plans will be rendered here -->
             </div>
         </div>
 
@@ -314,7 +329,8 @@
         <div id="cart-view" class="view-section hidden-view max-w-4xl mx-auto pt-6">
             <div class="flex items-center mb-6">
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Your Cart</h2>
+                 <!-- FIXED: Added tracking-normal -->
+                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Your Cart</h2>
                 <div class="w-auto invisible" style="min-width: 90px;"></div> 
             </div>
             <div id="cart-items-container" class="space-y-4 mb-8"></div>
@@ -325,7 +341,8 @@
         <div id="customer-details-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
             <div class="flex items-center mb-6">
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Customer Details</h2>
+                 <!-- FIXED: Added tracking-normal -->
+                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Customer Details</h2>
                 <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
             <form id="customer-form" class="bg-gray-800 p-6 sm:p-8 rounded-xl neon-glow-border space-y-6">
@@ -353,7 +370,8 @@
         <div id="invoice-view" class="view-section hidden-view max-w-xl mx-auto pt-6">
             <div class="flex items-center mb-6">
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow">Final Invoice & Payment</h2>
+                 <!-- FIXED: Added tracking-normal -->
+                <h2 class="text-4xl font-extrabold neon-magenta text-center flex-grow tracking-normal">Final Invoice & Payment</h2>
                 <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
             <div class="bg-gray-900 p-6 rounded-xl border border-gray-700 mb-6">
@@ -396,7 +414,8 @@
         <!-- Order Confirmation View -->
         <div id="order-confirmation-view" class="view-section hidden-view max-w-xl mx-auto text-center pt-16 pb-12">
              <i data-lucide="check-circle" class="w-20 h-20 text-green-500 mx-auto mb-6 animate-pulse"></i>
-            <h2 class="text-4xl font-extrabold mb-4 neon-cyan">Order Received!</h2>
+              <!-- FIXED: Added tracking-normal -->
+            <h2 class="text-4xl font-extrabold mb-4 neon-cyan tracking-normal">Order Received!</h2>
             <p class="text-lg text-gray-300 mb-6">Thank you for your purchase, <strong class="neon-magenta" id="confirmation-customer-name">Customer</strong>!</p>
             <div class="bg-gray-800 p-6 rounded-xl neon-glow-border space-y-4 text-left">
                 <p class="text-base text-gray-200"><strong class="text-yellow-400">Important:</strong> Please ensure you have shared your payment screenshot/receipt on Instagram or Email.</p>
@@ -410,7 +429,8 @@
         <div id="contact-view" class="view-section hidden-view pt-6">
             <div class="flex items-center mb-6">
                  <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
-                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Contact PixelFlow</h2>
+                  <!-- FIXED: Added tracking-normal -->
+                 <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow tracking-normal">Contact PixelFlow</h2>
                  <div class="w-auto invisible" style="min-width: 90px;"></div>
             </div>
             <section class="max-w-2xl mx-auto bg-gray-800 p-8 rounded-xl neon-glow-border mb-16">
@@ -418,9 +438,14 @@
                 <div class="space-y-4">
                     <p class="flex items-center text-lg"><i data-lucide="mail" class="w-5 h-5 mr-3 text-cyan-400"></i> Email: zeyamalam@gmail.com</p>
                     <p class="flex items-center text-lg"><i data-lucide="instagram" class="w-5 h-5 mr-3 text-cyan-400"></i> Instagram: pixel.flow._</p>
+                     <p class="flex items-center text-lg">
+                        <svg class="w-5 h-5 mr-3 text-cyan-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.29 0C19.74 0 18.06.66 17.61 1.07l-2.73 2.73c-3.1 1.04-5.06 4.68-5.32 7.73-.26 3.05.13 5.48.13 5.48l1.32-.48s-.03-.45-.03-.89c0-1.4.6-2.6 1.6-3.41.99-.8 2.37-1.35 3.99-1.35 2.15 0 3.73.89 4.67 1.83.94.94 1.48 2.22 1.48 3.71 0 1.49-.54 2.77-1.48 3.71-.94.94-2.52 1.83-4.67 1.83-1.62 0-3-.55-3.99-1.35-1-.8-1.6-2-1.6-3.41 0-.44-.03-.89-.03-.89l-.17.06-1.15.42s.39 2.43.13 5.48c-.26 3.05-2.22 6.69-5.32 7.73l-2.73 2.73c-.45.41-2.13 1.07-2.68 1.07-.55 0-.96-.41-.96-.96V.96C.04.41.45 0 .99 0c.55 0 2.23.66 2.68 1.07l2.73 2.73c3.1 1.04 5.06 4.68 5.32 7.73.26 3.05-.13 5.48-.13 5.48l-1.32-.48s.03-.45.03-.89c0-1.4-.6-2.6-1.6-3.41-.99-.8-2.37-1.35-3.99-1.35-2.15 0-3.73.89-4.67 1.83-.94.94-1.48 2.22-1.48 3.71 0 1.49.54 2.77 1.48 3.71.94.94 2.52 1.83 4.67 1.83 1.62 0 3-.55 3.99-1.35 1-.8 1.6-2 1.6-3.41 0-.44.03-.89.03-.89l.17.06 1.15.42s-.39 2.43-.13 5.48c.26 3.05 2.22 6.69 5.32 7.73l2.73 2.73c.45.41 2.13 1.07 2.68 1.07.55 0 .96-.41.96-.96V.96c0-.55-.41-.96-.96-.96z"/></svg> 
+                        Discord ID: idontlikeyourscent
+                     </p>
                 </div>
             </section>
         </div>
+
 
         <!-- Footer -->
         <footer class="text-center py-4 mt-12">
@@ -497,8 +522,7 @@
             STREAMING: [
                 { id: 900, name: "Netflix Plans", isCategoryLink: true, targetView: 'netflix-plans', icon: 'film' }, 
                 { id: 101, name: "Prime Video (1 Month)", price: 149.00, currency: "₹", icon: 'sparkles' },
-                // CORRECTED SPELLING: Replacement
-                { id: 102, name: "Prime Video (6M Unlimited Replacement)", price: 449.00, currency: "₹", icon: 'sparkles' }, 
+                { id: 102, name: "Prime Video (6M Unlimited Replacement)", price: 399.00, currency: "₹", icon: 'sparkles' }, 
                 { id: 103, name: "Disney+ Hotstar (3 Months)", price: 299.00, currency: "₹", icon: 'clapperboard' },
                 { id: 104, name: "HBO Max (6 Months)", price: 349.00, currency: "₹", icon: 'zap' },
                 { id: 108, name: "YouTube Premium (1 Month)", price: 59.00, currency: "₹", icon: 'youtube' },
@@ -509,8 +533,8 @@
                 { id: 113, name: "Canal+ (3 Months)", price: 199.00, currency: "₹", icon: 'play-circle' },
                 { id: 114, name: "Crunchyroll Fan (6 Months)", price: 149.00, currency: "₹", icon: 'star' },
                 { id: 115, name: "Crunchyroll Mega Fan (6 Months)", price: 199.00, currency: "₹", icon: 'star' },
+                { id: 203, name: "UFC/NBA Premium (3 Months)", price: 299.00, currency: "₹", icon: 'dribbble' }, // Moved
             ],
-            // CORRECTED SPELLING: Replacement
             NETFLIX_PLANS: [
                 { id: 701, name: "Netflix 4K (1M, No Replacement)", price: 119.00, currency: "₹", icon: 'film' },
                 { id: 702, name: "Netflix Standard VPN (3M, No Replacement)", price: 49.00, currency: "₹", icon: 'film' },
@@ -520,12 +544,13 @@
             ],
             GAMING: [
                 { id: 202, name: "FiveM Ready Account", price: 149.00, currency: "₹", icon: 'users' },
-                { id: 203, name: "UFC/NBA Premium (3 Months)", price: 299.00, currency: "₹", icon: 'dribbble' },
+                { id: 206, name: "Microsoft Random Code", price: 39.00, currency: "₹", icon: 'microsoft' }, 
+                { id: 208, name: "Rockstar Activation Code", price: 59.00, currency: "₹", icon: 'key' },
+            ],
+            DISCORD: [ // New Category
                 { id: 204, name: "Nitro Promo Code (1 Month)", price: 49.00, currency: "₹", icon: 'gift' },
                 { id: 205, name: "Nitro Promo Code (3 Months)", price: 299.00, currency: "₹", icon: 'gift' },
-                { id: 206, name: "Microsoft Random Code", price: 39.00, currency: "₹", icon: 'microsoft' }, 
                 { id: 207, name: "Discord Verified Token (Email)", price: 39.00, currency: "₹", icon: 'mail-check' },
-                { id: 208, name: "Rockstar Activation Code", price: 59.00, currency: "₹", icon: 'key' },
                 { id: 209, name: "Server Boost (14x, 1 Month)", price: 599.00, currency: "₹", icon: 'rocket' },
                 { id: 210, name: "Nitro Token (1 Month)", price: 149.00, currency: "₹", icon: 'ticket' }, 
                 { id: 211, name: "Nitro Token (3 Months)", price: 249.00, currency: "₹", icon: 'ticket' },
@@ -537,7 +562,7 @@
                 { id: 303, name: "PureVPN Global (Lifetime)", price: 249.00, currency: "₹", icon: 'cloud' },
                 { id: 304, name: "IPVanish (6 Months)", price: 299.00, currency: "₹", icon: 'shield-alert' },
             ],
-            PRODUCTIVITY: [
+            LEARNING_EDITING: [ // Renamed category key
                 { id: 401, name: "Canva Pro (1 Year)", price: 350.00, currency: "₹", icon: 'layout-grid' },
                 { id: 402, name: "ChatGPT Plus (1 Month)", price: 299.00, currency: "₹", icon: 'bot' },
                 { id: 403, name: "Filmora Pro (6 Months)", price: 199.00, currency: "₹", icon: 'video' },
@@ -546,7 +571,7 @@
                 { id: 406, name: "CapCut Pro (3 Months)", price: 149.00, currency: "₹", icon: 'scissors' },
                 { id: 407, name: "Gemini Pro (1 Year)", price: 599.00, currency: "₹", icon: 'brain-circuit' }, 
             ],
-            OTHER_ACCOUNTS: [
+            TELEPIZZA: [ // Renamed category key
                 { id: 501, name: "Telepizza Points [ES] (5k-10k)", price: 99.00, currency: "₹", icon: 'pizza' },
                 { id: 502, name: "Telepizza Points [ES] (10k-17k)", price: 129.00, currency: "₹", icon: 'pizza' },
                 { id: 503, name: "Telepizza Points [ES] (17k-20k)", price: 249.00, currency: "₹", icon: 'pizza' },
@@ -590,7 +615,13 @@
             
             // Handle rendering based on view type
             if (viewName === 'products' && category) { 
-                document.getElementById('product-category-title').textContent = category.toUpperCase(); 
+                 // Format category name for display 
+                 let displayCategory = category; // Default to key
+                 if(category === 'LEARNING_EDITING') displayCategory = 'Learning & Editing';
+                 else if(category === 'TELEPIZZA') displayCategory = 'Telepizza Points';
+                 else displayCategory = category.replace(/_/g, ' '); // Basic formatting for others
+
+                document.getElementById('product-category-title').textContent = displayCategory; 
                 renderProducts('product-list', category); // Render generic products
             } else if (viewName === 'netflix-plans') {
                  renderProducts('netflix-plan-list', 'NETFLIX_PLANS'); // Render specific Netflix plans
@@ -606,13 +637,12 @@
         function goBack() { 
             let targetView = previousView || 'home'; 
             
-            // Define explicit back navigation paths
             if (currentView === 'invoice') targetView = 'customer-details';
             else if (currentView === 'customer-details') targetView = 'cart';
             else if (currentView === 'order-confirmation') { resetAndGoHome(); return; }
-            else if (currentView === 'netflix-plans') targetView = 'home'; // Go home from netflix plans
-            else if (['products', 'cart', 'contact'].includes(currentView)) targetView = 'home'; // Go home from these main views
-            else targetView = 'home'; // Default fallback
+            else if (currentView === 'netflix-plans') targetView = 'home'; 
+            else if (currentView === 'products' || currentView === 'cart' || currentView === 'contact') targetView = 'home'; 
+            else targetView = 'home'; 
             
             switchView(targetView);
         }
@@ -715,6 +745,7 @@
             } else {
                 actionArea.innerHTML = getAddToCartButtonHTML(productId);
             }
+             lucide.createIcons(); // Re-render icons if quantity control added/removed them
         }
 
         function addToCart(productId) { 
@@ -927,23 +958,15 @@
              const summaryContainer = document.getElementById('cart-summary');
             if (summaryContainer) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
             
-            // Get current category before resetting cart/view
-            let currentCategory = null;
-            if (currentView.startsWith('products')) {
-                 currentCategory = document.getElementById('product-category-title')?.textContent?.toUpperCase();
-            } else if (currentView === 'netflix-plans') {
-                 currentCategory = 'NETFLIX_PLANS';
-            }
-
+            const previousCartState = [...cart]; // Store cart state before clearing
             cart = []; // Clear the cart
             customerDetails = { name: '', email: '', phone: '' };
             updateCartDisplay(); // Update cart icon
             
-            // If we were on a product page, re-render it to reset buttons AFTER cart is cleared
-            if (currentCategory) {
-                 const containerId = currentView === 'netflix-plans' ? 'netflix-plan-list' : 'product-list';
-                 renderProducts(containerId, currentCategory); 
-            } 
+            // Re-render product cards that were in the cart to reset their buttons
+            previousCartState.forEach(item => {
+                 updateProductCardUI(item.id);
+            });
             
             switchView('home'); // Finally, switch to home view
         }
@@ -955,5 +978,4 @@
     </script>
 </body>
 </html>
-
 
