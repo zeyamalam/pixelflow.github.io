@@ -387,11 +387,12 @@
                 </div>
                 <div class="p-4 border border-gray-700 rounded-lg mb-4 text-center">
                     <p class="font-bold text-lg mb-3">Scan UPI QR Code (PixelFlow)</p>
+                    <!-- UPDATED QR Code Size -->
                     <img id="upi-qr-code" 
                          src="image_40a5fe.png" 
                          alt="UPI QR Code for Payment" 
-                         class="mx-auto w-48 h-48 rounded-lg mb-3 border-2 border-gray-700"
-                         onerror="this.onerror=null; this.src='https://placehold.co/192x192/0d0d1e/FF00FF?text=Error+Loading+QR';">
+                         class="mx-auto w-64 h-64 rounded-lg mb-3 border-2 border-gray-700"
+                         onerror="this.onerror=null; this.src='https://placehold.co/256x256/0d0d1e/FF00FF?text=Error+Loading+QR';">
                     <p class="text-sm text-gray-400">Scan this code with any UPI app to pay the total amount.</p>
                     <p class="text-sm text-gray-400">Or pay on our UPI ID: <strong class="text-gray-200">zeyamalam@fam</strong></p>
                 </div>
@@ -532,15 +533,14 @@
                 { id: 703, name: "Netflix 4K (6M, Unlimited Replacement)", price: 599.00, currency: "₹", icon: 'film' },
                 { id: 704, name: "Netflix Standard (6M, No Replacement)", price: 199.00, currency: "₹", icon: 'film' },
                 { id: 705, name: "Netflix 4K (6M, No Replacement)", price: 299.00, currency: "₹", icon: 'film' },
-                // ADDED New Plan
-                { id: 706, name: "Netflix Standard (6M, Unlimited Replacement)", price: 399.00, currency: "₹", icon: 'film' },
+                { id: 706, name: "Netflix Standard (6M, Unlimited Replacement)", price: 399.00, currency: "₹", icon: 'film' }, // Added
             ],
             GAMING: [
                 { id: 202, name: "FiveM Ready Account", price: 149.00, currency: "₹", icon: 'users' },
                 { id: 206, name: "Microsoft Random Code", price: 39.00, currency: "₹", icon: 'microsoft' }, 
                 { id: 208, name: "Rockstar Activation Code", price: 59.00, currency: "₹", icon: 'key' },
             ],
-            DISCORD: [ // New Category
+            DISCORD: [ 
                 { id: 204, name: "Nitro Promo Code (1 Month)", price: 49.00, currency: "₹", icon: 'gift' },
                 { id: 205, name: "Nitro Promo Code (3 Months)", price: 299.00, currency: "₹", icon: 'gift' },
                 { id: 207, name: "Discord Verified Token (Email)", price: 39.00, currency: "₹", icon: 'mail-check' },
@@ -555,7 +555,7 @@
                 { id: 303, name: "PureVPN Global (Lifetime)", price: 249.00, currency: "₹", icon: 'cloud' },
                 { id: 304, name: "IPVanish (6 Months)", price: 299.00, currency: "₹", icon: 'shield-alert' },
             ],
-            LEARNING_EDITING: [ // Renamed category key
+            LEARNING_EDITING: [ 
                 { id: 401, name: "Canva Pro (1 Year)", price: 350.00, currency: "₹", icon: 'layout-grid' },
                 { id: 402, name: "ChatGPT Plus (1 Month)", price: 299.00, currency: "₹", icon: 'bot' },
                 { id: 403, name: "Filmora Pro (6 Months)", price: 199.00, currency: "₹", icon: 'video' },
@@ -564,7 +564,7 @@
                 { id: 406, name: "CapCut Pro (3 Months)", price: 149.00, currency: "₹", icon: 'scissors' },
                 { id: 407, name: "Gemini Pro (1 Year)", price: 599.00, currency: "₹", icon: 'brain-circuit' }, 
             ],
-            TELEPIZZA: [ // Renamed category key
+            TELEPIZZA: [ 
                 { id: 501, name: "Telepizza Points [ES] (5k-10k)", price: 99.00, currency: "₹", icon: 'pizza' },
                 { id: 502, name: "Telepizza Points [ES] (10k-17k)", price: 129.00, currency: "₹", icon: 'pizza' },
                 { id: 503, name: "Telepizza Points [ES] (17k-20k)", price: 249.00, currency: "₹", icon: 'pizza' },
@@ -578,7 +578,7 @@
         // --- STATE MANAGEMENT ---
         let currentView = 'home';
         let previousView = 'home'; 
-        let cart = []; // Array of { id: number, quantity: number }
+        let cart = []; 
         let customerDetails = { name: '', email: '', phone: '' };
 
         // --- TEMPLATE TO RESTORE CART SUMMARY ---
@@ -606,7 +606,6 @@
             if (targetView) { targetView.classList.remove('hidden-view'); } 
             else { console.error("View not found:", viewName); return; } 
             
-            // Handle rendering based on view type
             if (viewName === 'products' && category) { 
                  let displayCategory = category; 
                  if(category === 'LEARNING_EDITING') displayCategory = 'Learning & Editing';
@@ -625,7 +624,6 @@
             window.scrollTo(0, 0);
         }
         
-        // Updated goBack to handle netflix view
         function goBack() { 
             let targetView = previousView || 'home'; 
             
@@ -639,22 +637,17 @@
             switchView(targetView);
         }
 
-        // --- PRODUCT RENDERING (Now accepts container ID) ---
+        // --- PRODUCT RENDERING ---
         function renderProducts(containerId, category) { 
             const productListContainer = document.getElementById(containerId);
-            if (!productListContainer) {
-                 console.error("Product list container not found:", containerId);
-                 return;
-            }
+            if (!productListContainer) { console.error("Container not found:", containerId); return; }
             productListContainer.innerHTML = ''; 
-
             const categoryProducts = productsData[category];
             if (!categoryProducts || categoryProducts.length === 0) { 
-                 productListContainer.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found in this category yet.</p>`;
+                 productListContainer.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found.</p>`;
                  return;
             }
-
-            categoryProducts.forEach(product => {
+            categoryProducts.forEach(product => { /* ... card generation ... */ 
                 let productCardHTML = '';
                 if (product.isCategoryLink) {
                      productCardHTML = `
@@ -662,8 +655,7 @@
                             <div> <div class="flex items-center mb-3"><i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i><h3 class="font-bold text-xl neon-cyan">${product.name}</h3></div> <p class="text-sm text-gray-400 mb-4">Click to see available plans & pricing.</p> </div>
                             <button class="w-full mt-auto px-4 py-2 text-sm rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-500 transition duration-300"> View Plans </button>
                          </div>`;
-                } 
-                else {
+                } else {
                     const cartItem = cart.find(item => item.id === product.id);
                     const quantity = cartItem ? cartItem.quantity : 0;
                     productCardHTML = `
@@ -676,274 +668,62 @@
             });
             lucide.createIcons(); 
         }
-
-        // --- Helper functions for product card buttons ---
-        function getAddToCartButtonHTML(productId) {
-            return `<button onclick="addToCart(${productId})" class="add-to-cart-btn w-full px-4 py-2 text-sm rounded-lg font-bold bg-green-500 text-gray-900 hover:bg-green-400 transition duration-300">Add to Cart</button>`;
-        }
-
-        function getQuantityControlHTML(productId, quantity) {
-            return `
-                <div class="quantity-control">
-                    <button onclick="decreaseQuantity(${productId})" class="quantity-btn">-</button>
-                    <span class="quantity-display">${quantity}</span>
-                    <button onclick="increaseQuantity(${productId})" class="quantity-btn">+</button>
-                </div>`;
-        }
-
+        function getAddToCartButtonHTML(productId) { /* ... */ return `<button onclick="addToCart(${productId})" class="add-to-cart-btn w-full px-4 py-2 text-sm rounded-lg font-bold bg-green-500 text-gray-900 hover:bg-green-400 transition duration-300">Add to Cart</button>`; }
+        function getQuantityControlHTML(productId, quantity) { /* ... */ return `<div class="quantity-control"><button onclick="decreaseQuantity(${productId})" class="quantity-btn">-</button><span class="quantity-display">${quantity}</span><button onclick="increaseQuantity(${productId})" class="quantity-btn">+</button></div>`; }
 
         // --- CART LOGIC ---
-        function findProductById(id) { 
-             for (const category in productsData) {
-                 if(Array.isArray(productsData[category])) { 
-                     const product = productsData[category].find(p => p.id === id);
-                     if (product) return product;
-                 }
-            }
-            return null;
-         }
-
-        function updateProductCardUI(productId) {
-            const productCard = document.querySelector(`#product-list .product-card[data-product-id="${productId}"]`) || 
-                                document.querySelector(`#netflix-plan-list .product-card[data-product-id="${productId}"]`);
+        function findProductById(id) { /* ... */ 
+             for (const category in productsData) { if(Array.isArray(productsData[category])) { const product = productsData[category].find(p => p.id === id); if (product) return product; } } return null; }
+        function updateProductCardUI(productId) { /* ... */ 
+             const productCard = document.querySelector(`#product-list .product-card[data-product-id="${productId}"]`) || document.querySelector(`#netflix-plan-list .product-card[data-product-id="${productId}"]`);
             if (!productCard) return; 
-
-            const actionArea = productCard.querySelector('.product-action-area');
-            if (!actionArea) return; 
-
+            const actionArea = productCard.querySelector('.product-action-area'); if (!actionArea) return; 
             const cartItem = cart.find(item => item.id === productId);
-
-            if (cartItem && cartItem.quantity > 0) {
-                actionArea.innerHTML = getQuantityControlHTML(productId, cartItem.quantity);
-            } else {
-                actionArea.innerHTML = getAddToCartButtonHTML(productId);
-            }
-             lucide.createIcons(); 
-        }
-
-        function addToCart(productId) { 
-            const product = findProductById(productId);
-            if (!product || product.isCategoryLink) return; 
-            
+            if (cartItem && cartItem.quantity > 0) { actionArea.innerHTML = getQuantityControlHTML(productId, cartItem.quantity); } 
+            else { actionArea.innerHTML = getAddToCartButtonHTML(productId); }
+            lucide.createIcons(); }
+        function addToCart(productId) { /* ... */ 
+             const product = findProductById(productId); if (!product || product.isCategoryLink) return; 
             let cartItem = cart.find(item => item.id === productId);
-
-            if (cartItem) {
-                cartItem.quantity += 1;
-            } else {
-                cart.push({ id: product.id, quantity: 1 });
-                cartItem = cart[cart.length - 1]; 
-            }
-            
-            updateProductCardUI(productId); 
-            updateCartDisplay(); 
-        }
-
-        function increaseQuantity(productId) {
-            let cartItem = cart.find(item => item.id === productId);
-            if (cartItem) {
-                cartItem.quantity += 1;
-                updateProductCardUI(productId);
-                updateCartDisplay();
-                if (currentView === 'cart') { renderCart(); }
-            }
-        }
-        
-        function decreaseQuantity(productId) {
-             let cartItem = cart.find(item => item.id === productId);
-             if (cartItem) {
-                 cartItem.quantity -= 1;
-                 if (cartItem.quantity <= 0) {
-                     cart = cart.filter(item => item.id !== productId);
-                 }
-                 updateProductCardUI(productId);
-                 updateCartDisplay();
-                 if (currentView === 'cart') { renderCart(); }
-             }
-        }
-
-
-        function removeFromCart(productId) { // For cart page 'trash' icon
-            cart = cart.filter(item => item.id !== productId); 
-            renderCart(); 
-            updateCartDisplay(); 
-            updateProductCardUI(productId); 
-         }
-
-        function updateCartDisplay() { 
-             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').textContent = totalCount;
-        }
-
-        function calculateCartTotal(targetCurrency = '₹') { 
-            return cart.reduce((total, item) => {
-                const product = findProductById(item.id); 
-                if (product && !product.isCategoryLink && product.currency === targetCurrency) { 
-                    return total + (product.price * item.quantity); 
-                }
-                return total;
-            }, 0);
-         }
-
-        function renderCart() { 
-            const summaryContainer = document.getElementById('cart-summary');
-            if (!document.getElementById('cart-total')) { 
-                summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; 
-            }
-
-            const container = document.getElementById('cart-items-container');
-            const totalEl = document.getElementById('cart-total');
-            const checkoutBtn = document.getElementById('checkout-button');
-            const messageEl = document.getElementById('cart-message');
-            container.innerHTML = ''; 
-
+            if (cartItem) { cartItem.quantity += 1; } else { cart.push({ id: product.id, quantity: 1 }); cartItem = cart[cart.length - 1]; }
+            updateProductCardUI(productId); updateCartDisplay(); }
+        function increaseQuantity(productId) { /* ... */ 
+             let cartItem = cart.find(item => item.id === productId); if (cartItem) { cartItem.quantity += 1; updateProductCardUI(productId); updateCartDisplay(); if (currentView === 'cart') { renderCart(); } } }
+        function decreaseQuantity(productId) { /* ... */ 
+             let cartItem = cart.find(item => item.id === productId); if (cartItem) { cartItem.quantity -= 1; if (cartItem.quantity <= 0) { cart = cart.filter(item => item.id !== productId); } updateProductCardUI(productId); updateCartDisplay(); if (currentView === 'cart') { renderCart(); } } }
+        function removeFromCart(productId) { /* ... */ 
+             cart = cart.filter(item => item.id !== productId); renderCart(); updateCartDisplay(); updateProductCardUI(productId); }
+        function updateCartDisplay() { /* ... */ 
+             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0); document.getElementById('cart-count').textContent = totalCount; }
+        function calculateCartTotal(targetCurrency = '₹') { /* ... */ 
+             return cart.reduce((total, item) => { const product = findProductById(item.id); if (product && !product.isCategoryLink && product.currency === targetCurrency) { return total + (product.price * item.quantity); } return total; }, 0); }
+        function renderCart() { /* ... */ 
+            const summaryContainer = document.getElementById('cart-summary'); if (!document.getElementById('cart-total')) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
+            const container = document.getElementById('cart-items-container'); const totalEl = document.getElementById('cart-total'); const checkoutBtn = document.getElementById('checkout-button'); const messageEl = document.getElementById('cart-message'); container.innerHTML = ''; 
             const inrTotal = calculateCartTotal('₹');
-            
-            if (cart.length === 0) {
-                totalEl.textContent = '₹0.00';
-                checkoutBtn.classList.add('hidden-view');
-                messageEl.textContent = 'Your cart is empty. Start shopping!';
-                messageEl.classList.remove('hidden-view');
-            } else {
-                totalEl.textContent = `₹${inrTotal.toFixed(2)}`;
-                messageEl.textContent = `Total items: ${cart.reduce((sum, i) => sum + i.quantity, 0)} product(s).`; 
-                messageEl.classList.remove('hidden-view');
-                checkoutBtn.classList.remove('hidden-view');
-
-                cart.forEach(item => {
-                    const product = findProductById(item.id);
-                    if (!product || product.isCategoryLink) return; 
-
+            if (cart.length === 0) { totalEl.textContent = '₹0.00'; checkoutBtn.classList.add('hidden-view'); messageEl.textContent = 'Your cart is empty.'; messageEl.classList.remove('hidden-view'); } 
+            else { totalEl.textContent = `₹${inrTotal.toFixed(2)}`; messageEl.textContent = `Total items: ${cart.reduce((sum, i) => sum + i.quantity, 0)} product(s).`; messageEl.classList.remove('hidden-view'); checkoutBtn.classList.remove('hidden-view');
+                cart.forEach(item => { const product = findProductById(item.id); if (!product || product.isCategoryLink) return; 
                     const itemTotal = product.price * item.quantity;
-                    const itemHtml = `
-                        <div class="flex flex-col sm:flex-row justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-700 gap-4">
-                            <div class="flex-grow text-center sm:text-left">
-                                <p class="font-bold neon-cyan">${product.name}</p>
-                                <p class="text-sm text-gray-400">Unit Price: ${product.currency}${product.price.toFixed(2)}</p>
-                            </div>
-                            <div class="flex items-center space-x-4">
-                                <div class="quantity-control" style="background-color: transparent; border: none; box-shadow: none;"> 
-                                    <button onclick="decreaseQuantity(${item.id})" class="quantity-btn text-xl">-</button>
-                                    <span class="quantity-display text-lg">${item.quantity}</span>
-                                    <button onclick="increaseQuantity(${item.id})" class="quantity-btn text-xl">+</button>
-                                </div>
-                                <span class="text-lg font-bold neon-magenta w-24 text-right">${product.currency}${itemTotal.toFixed(2)}</span>
-                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-400 transition duration-200">
-                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                        </div>`;
-                    container.innerHTML += itemHtml;
-                });
-            }
-            lucide.createIcons(); 
-         }
+                    const itemHtml = `<div class="flex flex-col sm:flex-row justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-700 gap-4"><div class="flex-grow text-center sm:text-left"><p class="font-bold neon-cyan">${product.name}</p><p class="text-sm text-gray-400">Unit Price: ${product.currency}${product.price.toFixed(2)}</p></div><div class="flex items-center space-x-4"><div class="quantity-control" style="background-color: transparent; border: none; box-shadow: none;"><button onclick="decreaseQuantity(${item.id})" class="quantity-btn text-xl">-</button><span class="quantity-display text-lg">${item.quantity}</span><button onclick="increaseQuantity(${item.id})" class="quantity-btn text-xl">+</button></div><span class="text-lg font-bold neon-magenta w-24 text-right">${product.currency}${itemTotal.toFixed(2)}</span><button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-400 transition duration-200"><i data-lucide="trash-2" class="w-5 h-5"></i></button></div></div>`;
+                    container.innerHTML += itemHtml; }); }
+            lucide.createIcons(); }
 
         // --- INVOICE AND PAYMENT LOGIC ---
-        document.getElementById('customer-form').addEventListener('submit', function(event) { 
-            event.preventDefault(); 
-            const name = document.getElementById('customer-name').value;
-            const email = document.getElementById('customer-email').value;
-            const errorMsg = document.getElementById('form-error-message');
-            if (!name || !email) { errorMsg.textContent = 'Please fill out your Name and Email Address.'; errorMsg.classList.remove('hidden-view'); return; }
-            errorMsg.classList.add('hidden-view');
-            customerDetails.name = name;
-            customerDetails.email = email;
-            customerDetails.phone = document.getElementById('customer-phone').value;
-            showInvoice();
-         });
-        function checkout() { 
-            const inrTotal = calculateCartTotal('₹');
-            if (inrTotal === 0 && cart.length === 0) { 
-                 const messageEl = document.getElementById('cart-message');
-                 if (messageEl) { messageEl.textContent = 'Your cart is empty. Add items to proceed.'; messageEl.classList.remove('hidden-view'); }
-                 return;
-            }
-            document.getElementById('customer-name').value = customerDetails.name;
-            document.getElementById('customer-email').value = customerDetails.email;
-            document.getElementById('customer-phone').value = customerDetails.phone;
-            switchView('customer-details');
-         }
-        function showInvoice() { 
-            const inrTotal = calculateCartTotal('₹');
-            const invoiceListContainer = document.getElementById('invoice-items-list');
-            invoiceListContainer.innerHTML = '';
-            
-            cart.forEach(item => {
-                 const product = findProductById(item.id); 
-                 if (!product || product.isCategoryLink) return; 
-                const itemTotal = product.price * item.quantity;
-                const itemHtml = `<div class="flex justify-between text-sm text-gray-400"><span>${product.name} (${item.quantity}x)</span><span class="font-medium">${product.currency}${itemTotal.toFixed(2)}</span></div>`;
-                invoiceListContainer.innerHTML += itemHtml;
-            });
-
-            const finalTotalDisplay = document.getElementById('invoice-total');
-            finalTotalDisplay.textContent = `₹${inrTotal.toFixed(2)}`;
-            
-             const nonInrItems = cart.some(item => {
-                  const p = findProductById(item.id); 
-                  return p && !p.isCategoryLink && p.currency !== '₹';
-             });
-             document.getElementById('invoice-currency-note').classList.toggle('hidden-view', !nonInrItems);
-
-            switchView('invoice');
-         }
+        document.getElementById('customer-form').addEventListener('submit', function(event) { /* ... */ 
+            event.preventDefault(); const name = document.getElementById('customer-name').value; const email = document.getElementById('customer-email').value; const errorMsg = document.getElementById('form-error-message'); if (!name || !email) { errorMsg.textContent = 'Please fill out Name and Email.'; errorMsg.classList.remove('hidden-view'); return; } errorMsg.classList.add('hidden-view'); customerDetails.name = name; customerDetails.email = email; customerDetails.phone = document.getElementById('customer-phone').value; showInvoice(); });
+        function checkout() { /* ... */ 
+            const inrTotal = calculateCartTotal('₹'); if (inrTotal === 0 && cart.length === 0) { const messageEl = document.getElementById('cart-message'); if (messageEl) { messageEl.textContent = 'Cart is empty.'; messageEl.classList.remove('hidden-view'); } return; } document.getElementById('customer-name').value = customerDetails.name; document.getElementById('customer-email').value = customerDetails.email; document.getElementById('customer-phone').value = customerDetails.phone; switchView('customer-details'); }
+        function showInvoice() { /* ... */ 
+            const inrTotal = calculateCartTotal('₹'); const invoiceListContainer = document.getElementById('invoice-items-list'); invoiceListContainer.innerHTML = ''; cart.forEach(item => { const product = findProductById(item.id); if (!product || product.isCategoryLink) return; const itemTotal = product.price * item.quantity; const itemHtml = `<div class="flex justify-between text-sm text-gray-400"><span>${product.name} (${item.quantity}x)</span><span class="font-medium">${product.currency}${itemTotal.toFixed(2)}</span></div>`; invoiceListContainer.innerHTML += itemHtml; }); const finalTotalDisplay = document.getElementById('invoice-total'); finalTotalDisplay.textContent = `₹${inrTotal.toFixed(2)}`; const nonInrItems = cart.some(item => { const p = findProductById(item.id); return p && !p.isCategoryLink && p.currency !== '₹'; }); document.getElementById('invoice-currency-note').classList.toggle('hidden-view', !nonInrItems); switchView('invoice'); }
 
         // --- Function to send order email using EmailJS ---
-        function sendOrderEmail() { 
-            const serviceID = 'pixelflow';     
-            const templateID = 'template_qaqai6k';   
-            // Public Key initialized in <head>
-
-            let orderItemsText = ''; 
-            cart.forEach(item => { 
-                const product = findProductById(item.id);
-                if (product && !product.isCategoryLink) {
-                    orderItemsText += `${product.name} (x${item.quantity}) - ${product.currency}${ (product.price * item.quantity).toFixed(2) }\n`; 
-                }
-            });
-            const templateParams = {
-                customer_name: customerDetails.name,
-                customer_email: customerDetails.email,
-                customer_phone: customerDetails.phone || 'Not Provided', 
-                order_items: orderItemsText, 
-                order_total: `₹${calculateCartTotal('₹').toFixed(2)}`
-            };
-            console.log("Preparing to send email with params:", templateParams);
-            if (typeof emailjs === 'undefined') { console.error('EmailJS SDK not loaded.'); return; }
-            
-            emailjs.send(serviceID, templateID, templateParams)
-                .then((response) => { console.log('SUCCESS! Email Sent.', response.status, response.text); })
-                .catch((error) => { console.error('FAILED... Email Sending Error:', error); });
-        }
-
-        // Function to show the order confirmation view AND send email
-        function showOrderConfirmation() { 
-            document.getElementById('confirmation-customer-name').textContent = customerDetails.name;
-            document.getElementById('confirmation-customer-email').textContent = customerDetails.email;
-            console.log("Order Confirmed! Customer Details:", customerDetails);
-            console.log("Cart Items:", cart);
-            sendOrderEmail(); 
-            switchView('order-confirmation');
-         }
-
-        // Function to reset cart/customer details and go home
-        function resetAndGoHome() { 
-             const summaryContainer = document.getElementById('cart-summary');
-            if (summaryContainer) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; }
-            
-            const previousCartState = [...cart]; // Store cart state before clearing
-            cart = []; // Clear the cart
-            customerDetails = { name: '', email: '', phone: '' };
-            updateCartDisplay(); // Update cart icon
-            
-            // Re-render product cards that were in the cart to reset their buttons
-            previousCartState.forEach(item => {
-                 updateProductCardUI(item.id);
-            });
-            
-            switchView('home'); // Finally, switch to home view
-        }
-
+        function sendOrderEmail() { /* ... */ 
+             const serviceID = 'pixelflow'; const templateID = 'template_qaqai6k'; let orderItemsText = ''; cart.forEach(item => { const product = findProductById(item.id); if (product && !product.isCategoryLink) { orderItemsText += `${product.name} (x${item.quantity}) - ${product.currency}${ (product.price * item.quantity).toFixed(2) }\n`; } }); const templateParams = { customer_name: customerDetails.name, customer_email: customerDetails.email, customer_phone: customerDetails.phone || 'N/A', order_items: orderItemsText, order_total: `₹${calculateCartTotal('₹').toFixed(2)}` }; console.log("Sending email:", templateParams); if (typeof emailjs === 'undefined') { console.error('EmailJS not loaded.'); return; } emailjs.send(serviceID, templateID, templateParams).then((response) => { console.log('Email Sent OK.', response.status, response.text); }).catch((error) => { console.error('Email Send FAILED:', error); }); }
+        function showOrderConfirmation() { /* ... */ 
+             document.getElementById('confirmation-customer-name').textContent = customerDetails.name; document.getElementById('confirmation-customer-email').textContent = customerDetails.email; console.log("Order Confirmed:", customerDetails, cart); sendOrderEmail(); switchView('order-confirmation'); }
+        function resetAndGoHome() { /* ... */ 
+             const summaryContainer = document.getElementById('cart-summary'); if (summaryContainer) { summaryContainer.innerHTML = CART_SUMMARY_CONTENT_TEMPLATE; } const previousCartState = [...cart]; cart = []; customerDetails = { name: '', email: '', phone: '' }; updateCartDisplay(); previousCartState.forEach(item => { updateProductCardUI(item.id); }); switchView('home'); }
 
         // --- INITIALIZATION ---
         switchView('home'); 
@@ -951,5 +731,4 @@
     </script>
 </body>
 </html>
-
 
