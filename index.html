@@ -164,7 +164,7 @@
             transform: translateY(-1px) scale(1.01);
         }
 
-        /* NEW: Quantity Control Styles */
+        /* Quantity Control Styles */
         .quantity-control {
             display: flex;
             align-items: center;
@@ -250,7 +250,7 @@
                 </div>
             </section>
 
-            <!-- UPDATED: Category List -->
+            <!-- Category List -->
             <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 mb-10">
                  <div class="p-6 rounded-xl neon-glow-border" onclick="switchView('products', 'STREAMING')">
                     <i data-lucide="tv" class="w-8 h-8 mb-3 text-red-400"></i>
@@ -285,7 +285,7 @@
             </section>
         </div>
 
-        <!-- Products View -->
+        <!-- Products View (Generic) -->
         <div id="products-view" class="view-section hidden-view pt-6"> 
             <div class="flex items-center mb-6"> 
                 <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
@@ -296,6 +296,19 @@
             </div>
             <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"> </div>
         </div>
+
+        <!-- NEW: Netflix Plans View -->
+        <div id="netflix-plans-view" class="view-section hidden-view pt-6">
+            <div class="flex items-center mb-6"> 
+                <a href="#" class="back-button-standalone -ml-2 mr-4" onclick="goBack()">← Back</a>
+                <h2 class="text-4xl font-extrabold neon-cyan text-center flex-grow">Netflix Plans</h2>
+                 <div class="w-auto invisible" style="min-width: 90px;"></div> <!-- Placeholder -->
+            </div>
+            <div id="netflix-plan-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4"> 
+                <!-- Specific Netflix plans will be rendered here -->
+            </div>
+        </div>
+
 
         <!-- Cart View -->
         <div id="cart-view" class="view-section hidden-view max-w-4xl mx-auto pt-6">
@@ -482,7 +495,12 @@
         // --- UPDATED E-COMMERCE DATA ---
         const productsData = {
             STREAMING: [
-                { id: 102, name: "Prime Video (6 Months)", price: 499.00, currency: "₹", icon: 'sparkles' },
+                 // Special entry for Netflix - acts as a link
+                { id: 900, name: "Netflix Plans", isCategoryLink: true, targetView: 'netflix-plans', icon: 'film' }, 
+                // Updated Prime Video
+                { id: 101, name: "Prime Video (1 Month)", price: 149.00, currency: "₹", icon: 'sparkles' },
+                { id: 102, name: "Prime Video (6M Unlimited Replacements)", price: 399.00, currency: "₹", icon: 'sparkles' },
+                // Other streaming services
                 { id: 103, name: "Disney+ Hotstar (3 Months)", price: 299.00, currency: "₹", icon: 'clapperboard' },
                 { id: 104, name: "HBO Max (6 Months)", price: 349.00, currency: "₹", icon: 'zap' },
                 { id: 108, name: "YouTube Premium (1 Month)", price: 59.00, currency: "₹", icon: 'youtube' },
@@ -493,6 +511,14 @@
                 { id: 113, name: "Canal+ (3 Months)", price: 199.00, currency: "₹", icon: 'play-circle' },
                 { id: 114, name: "Crunchyroll Fan (6 Months)", price: 149.00, currency: "₹", icon: 'star' },
                 { id: 115, name: "Crunchyroll Mega Fan (6 Months)", price: 199.00, currency: "₹", icon: 'star' },
+            ],
+             // NEW Category for specific Netflix plans
+            NETFLIX_PLANS: [
+                { id: 701, name: "Netflix 4K (1M, No Replace)", price: 119.00, currency: "₹", icon: 'film' },
+                { id: 702, name: "Netflix Standard VPN (3M, No Replace)", price: 49.00, currency: "₹", icon: 'film' },
+                { id: 703, name: "Netflix 4K (6M, Unlimited Replace)", price: 599.00, currency: "₹", icon: 'film' },
+                { id: 704, name: "Netflix Standard (6M, No Replace)", price: 199.00, currency: "₹", icon: 'film' },
+                { id: 705, name: "Netflix 4K (6M, No Replace)", price: 299.00, currency: "₹", icon: 'film' },
             ],
             GAMING: [
                 { id: 202, name: "FiveM Ready Account", price: 149.00, currency: "₹", icon: 'users' },
@@ -559,57 +585,93 @@
             if (currentView !== viewName) { previousView = currentView; }
             currentView = viewName;
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden-view'));
+            
             const targetView = document.getElementById(viewName + '-view');
             if (targetView) { targetView.classList.remove('hidden-view'); } 
-            else { console.error("View not found:", viewName); }
+            else { console.error("View not found:", viewName); return; } // Added return on error
             
+            // Handle rendering based on view type
             if (viewName === 'products' && category) { 
                 document.getElementById('product-category-title').textContent = category.toUpperCase(); 
-                renderProducts(category); 
+                renderProducts('product-list', category); // Render generic products
+            } else if (viewName === 'netflix-plans') {
+                 renderProducts('netflix-plan-list', 'NETFLIX_PLANS'); // Render specific Netflix plans
+            } else if (viewName === 'cart') { 
+                renderCart(); 
             }
-            if (viewName === 'cart') { renderCart(); }
             
             lucide.createIcons();
             window.scrollTo(0, 0);
         }
+        
+        // Updated goBack to handle netflix view
         function goBack() { 
             let targetView = previousView || 'home'; 
+            
+            // Define explicit back navigation paths
             if (currentView === 'invoice') targetView = 'customer-details';
             else if (currentView === 'customer-details') targetView = 'cart';
             else if (currentView === 'order-confirmation') { resetAndGoHome(); return; }
-            else targetView = 'home'; 
+            else if (currentView === 'netflix-plans') targetView = 'home'; // Go home from netflix plans
+            else if (['products', 'cart', 'contact'].includes(currentView)) targetView = 'home'; // Go home from these main views
+            else targetView = 'home'; // Default fallback
+            
             switchView(targetView);
         }
 
-        // --- PRODUCT RENDERING ---
-        function renderProducts(category) { 
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '';
+        // --- PRODUCT RENDERING (Now accepts container ID) ---
+        function renderProducts(containerId, category) { 
+            const productListContainer = document.getElementById(containerId);
+            if (!productListContainer) {
+                 console.error("Product list container not found:", containerId);
+                 return;
+            }
+            productListContainer.innerHTML = ''; // Clear previous content
+
             const categoryProducts = productsData[category];
             if (!categoryProducts || categoryProducts.length === 0) { 
-                 productList.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found in this category yet.</p>`;
+                 productListContainer.innerHTML = `<p class="col-span-full text-center text-lg text-red-400">No products found in this category yet.</p>`;
                  return;
             }
 
             categoryProducts.forEach(product => {
-                const cartItem = cart.find(item => item.id === product.id);
-                const quantity = cartItem ? cartItem.quantity : 0;
-
-                const productCard = `
-                    <div class="product-card p-6 rounded-xl neon-glow-border transition-all duration-300 flex flex-col justify-between" data-product-id="${product.id}">
-                        <div>
-                            <div class="flex items-center mb-3">
-                                <i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i>
-                                <h3 class="font-bold text-xl neon-cyan">${product.name}</h3>
+                let productCardHTML = '';
+                // Special card for category links (like Netflix in STREAMING)
+                if (product.isCategoryLink) {
+                     productCardHTML = `
+                         <div class="p-6 rounded-xl neon-glow-border transition-all duration-300 flex flex-col justify-between" onclick="switchView('${product.targetView}')">
+                            <div>
+                                <div class="flex items-center mb-3">
+                                    <i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i>
+                                    <h3 class="font-bold text-xl neon-cyan">${product.name}</h3>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-4">Click to see available plans & pricing.</p> 
                             </div>
-                            <p class="text-3xl font-extrabold mb-4 neon-magenta">${product.currency}${product.price.toFixed(2)}</p>
-                            <p class="text-sm text-gray-400 mb-4">Affordable premium access.</p> 
-                        </div>
-                        <div class="mt-auto product-action-area">
-                            ${quantity > 0 ? getQuantityControlHTML(product.id, quantity) : getAddToCartButtonHTML(product.id) }
-                        </div>
-                    </div>`;
-                productList.innerHTML += productCard;
+                            <button class="w-full mt-auto px-4 py-2 text-sm rounded-lg font-bold bg-blue-600 text-white hover:bg-blue-500 transition duration-300">
+                                View Plans
+                            </button>
+                         </div>`;
+                } 
+                // Standard product card
+                else {
+                    const cartItem = cart.find(item => item.id === product.id);
+                    const quantity = cartItem ? cartItem.quantity : 0;
+                    productCardHTML = `
+                        <div class="product-card p-6 rounded-xl neon-glow-border transition-all duration-300 flex flex-col justify-between" data-product-id="${product.id}">
+                            <div>
+                                <div class="flex items-center mb-3">
+                                    <i data-lucide="${product.icon}" class="w-6 h-6 mr-3 text-yellow-400"></i>
+                                    <h3 class="font-bold text-xl neon-cyan">${product.name}</h3>
+                                </div>
+                                <p class="text-3xl font-extrabold mb-4 neon-magenta">${product.currency}${product.price.toFixed(2)}</p>
+                                <p class="text-sm text-gray-400 mb-4">Affordable premium access.</p> 
+                            </div>
+                            <div class="mt-auto product-action-area">
+                                ${quantity > 0 ? getQuantityControlHTML(product.id, quantity) : getAddToCartButtonHTML(product.id) }
+                            </div>
+                        </div>`;
+                }
+                productListContainer.innerHTML += productCardHTML;
             });
             lucide.createIcons(); 
         }
@@ -632,17 +694,24 @@
         // --- CART LOGIC ---
         function findProductById(id) { 
              for (const category in productsData) {
-                const product = productsData[category].find(p => p.id === id);
-                if (product) return product;
+                 // Check if the category is an array before trying to find in it
+                 if(Array.isArray(productsData[category])) { 
+                     const product = productsData[category].find(p => p.id === id);
+                     if (product) return product;
+                 }
             }
             return null;
          }
 
         function updateProductCardUI(productId) {
-            const productCard = document.querySelector(`.product-card[data-product-id="${productId}"]`);
-            if (!productCard) return; // Only update if card is visible
+            // Check both general product list and netflix list
+            const productCard = document.querySelector(`#product-list .product-card[data-product-id="${productId}"]`) || 
+                                document.querySelector(`#netflix-plan-list .product-card[data-product-id="${productId}"]`);
+            if (!productCard) return; 
 
             const actionArea = productCard.querySelector('.product-action-area');
+            if (!actionArea) return; // Only update cards that have an action area
+
             const cartItem = cart.find(item => item.id === productId);
 
             if (cartItem && cartItem.quantity > 0) {
@@ -654,7 +723,7 @@
 
         function addToCart(productId) { 
             const product = findProductById(productId);
-            if (!product) return;
+            if (!product || product.isCategoryLink) return; // Prevent adding category links
             
             let cartItem = cart.find(item => item.id === productId);
 
@@ -662,11 +731,11 @@
                 cartItem.quantity += 1;
             } else {
                 cart.push({ id: product.id, quantity: 1 });
-                cartItem = cart[cart.length - 1]; // Get ref to newly added item
+                cartItem = cart[cart.length - 1]; 
             }
             
-            updateProductCardUI(productId); // Update the card that was clicked
-            updateCartDisplay(); // Update cart icon count
+            updateProductCardUI(productId); 
+            updateCartDisplay(); 
         }
 
         function increaseQuantity(productId) {
@@ -675,10 +744,7 @@
                 cartItem.quantity += 1;
                 updateProductCardUI(productId);
                 updateCartDisplay();
-                 // If cart view is active, re-render it
-                if (currentView === 'cart') {
-                    renderCart();
-                }
+                if (currentView === 'cart') { renderCart(); }
             }
         }
         
@@ -687,24 +753,19 @@
              if (cartItem) {
                  cartItem.quantity -= 1;
                  if (cartItem.quantity <= 0) {
-                     // Remove item from cart if quantity is 0 or less
                      cart = cart.filter(item => item.id !== productId);
                  }
                  updateProductCardUI(productId);
                  updateCartDisplay();
-                  // If cart view is active, re-render it
-                 if (currentView === 'cart') {
-                     renderCart();
-                 }
+                 if (currentView === 'cart') { renderCart(); }
              }
         }
 
 
-        function removeFromCart(productId) { // This function is for the main cart page 'trash' icon
-            cart = cart.filter(item => item.id !== productId); // Remove item
-            renderCart(); // Re-render the cart view
-            updateCartDisplay(); // Update the cart count icon
-            // Also update the product card on the products page if it's visible
+        function removeFromCart(productId) { // For cart page 'trash' icon
+            cart = cart.filter(item => item.id !== productId); 
+            renderCart(); 
+            updateCartDisplay(); 
             updateProductCardUI(productId); 
          }
 
@@ -715,8 +776,8 @@
 
         function calculateCartTotal(targetCurrency = '₹') { 
             return cart.reduce((total, item) => {
-                const product = findProductById(item.id); // Need product details for price
-                if (product && product.currency === targetCurrency) { 
+                const product = findProductById(item.id); 
+                if (product && !product.isCategoryLink && product.currency === targetCurrency) { // Ensure it's not a category link
                     return total + (product.price * item.quantity); 
                 }
                 return total;
@@ -744,16 +805,15 @@
                 messageEl.classList.remove('hidden-view');
             } else {
                 totalEl.textContent = `₹${inrTotal.toFixed(2)}`;
-                messageEl.textContent = `Total items: ${cart.reduce((sum, i) => sum + i.quantity, 0)} product(s).`; // Sum quantities
+                messageEl.textContent = `Total items: ${cart.reduce((sum, i) => sum + i.quantity, 0)} product(s).`; 
                 messageEl.classList.remove('hidden-view');
                 checkoutBtn.classList.remove('hidden-view');
 
                 cart.forEach(item => {
                     const product = findProductById(item.id);
-                    if (!product) return; // Skip if product not found (shouldn't happen)
+                    if (!product || product.isCategoryLink) return; 
 
                     const itemTotal = product.price * item.quantity;
-                    // Now includes quantity controls directly in the cart view
                     const itemHtml = `
                         <div class="flex flex-col sm:flex-row justify-between items-center bg-gray-900 p-4 rounded-lg border border-gray-700 gap-4">
                             <div class="flex-grow text-center sm:text-left">
@@ -809,8 +869,8 @@
             invoiceListContainer.innerHTML = '';
             
             cart.forEach(item => {
-                 const product = findProductById(item.id); // Need product details
-                 if (!product) return; 
+                 const product = findProductById(item.id); 
+                 if (!product || product.isCategoryLink) return; 
                 const itemTotal = product.price * item.quantity;
                 const itemHtml = `<div class="flex justify-between text-sm text-gray-400"><span>${product.name} (${item.quantity}x)</span><span class="font-medium">${product.currency}${itemTotal.toFixed(2)}</span></div>`;
                 invoiceListContainer.innerHTML += itemHtml;
@@ -819,8 +879,10 @@
             const finalTotalDisplay = document.getElementById('invoice-total');
             finalTotalDisplay.textContent = `₹${inrTotal.toFixed(2)}`;
             
-            // Note about non-INR currency (if applicable in future)
-             const nonInrItems = cart.some(item => findProductById(item.id)?.currency !== '₹');
+             const nonInrItems = cart.some(item => {
+                  const p = findProductById(item.id); 
+                  return p && !p.isCategoryLink && p.currency !== '₹';
+             });
              document.getElementById('invoice-currency-note').classList.toggle('hidden-view', !nonInrItems);
 
             switchView('invoice');
@@ -828,15 +890,14 @@
 
         // --- Function to send order email using EmailJS ---
         function sendOrderEmail() { 
-            // ** YOUR IDs ARE INSERTED HERE **
             const serviceID = 'pixelflow';     
             const templateID = 'template_qaqai6k';   
-            // Public Key was initialized in <head>
+            // Public Key initialized in <head>
 
             let orderItemsText = ''; 
             cart.forEach(item => { 
                 const product = findProductById(item.id);
-                if (product) {
+                if (product && !product.isCategoryLink) {
                     orderItemsText += `${product.name} (x${item.quantity}) - ${product.currency}${ (product.price * item.quantity).toFixed(2) }\n`; 
                 }
             });
@@ -872,17 +933,17 @@
             cart = [];
             customerDetails = { name: '', email: '', phone: '' };
             updateCartDisplay();
-             // Manually re-render product cards if on products view to reset buttons
-            if (currentView.startsWith('products')) {
-                const category = currentView.split('-')[1]; // Get category if possible
+            
+            // Re-render product cards if on a product view to reset buttons
+            if (currentView.startsWith('products') || currentView === 'netflix-plans') {
+                const category = currentView === 'netflix-plans' ? 'NETFLIX_PLANS' : previousView.split('-')[1]?.toUpperCase(); 
                  if (category) {
-                     renderProducts(category.toUpperCase());
-                 } else {
-                     switchView('home'); // Fallback if category extraction fails
+                     // Need to determine which container to re-render
+                     const containerId = currentView === 'netflix-plans' ? 'netflix-plan-list' : 'product-list';
+                     renderProducts(containerId, category); 
                  }
-            } else {
-                switchView('home');
-            }
+            } 
+            switchView('home'); // Go home regardless
         }
 
         // --- INITIALIZATION ---
